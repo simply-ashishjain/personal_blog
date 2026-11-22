@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roznamcha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: an open diary on a dim desk under lamplight; a two-page spread on wide screens, one page on phones */
+  --night: #11151c;
+  --lapis: #1b2946;
+  --gold: #c9a55e;
+  --paper: #f1e6cf;
+  --ink: #2a2838;
+  --rose: #8a3d4b;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body: "EB Garamond", "Iowan Old Style", Georgia, serif;
+  --urdu: "Noto Nastaliq Urdu", "Gulzar", "Jameel Noori Nastaleeq", serif;
+  --calli: "Gulzar", "Noto Nastaliq Urdu", serif;
+  --fs: 17px;
+  --grain: none;
+  --endpaper: none;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background-color: var(--night);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 50% 34%, rgba(214, 170, 102, 0.13) 0%, rgba(214, 170, 102, 0) 70%),
+    radial-gradient(ellipse 90% 80% at 50% 45%, #1b2029 0%, var(--night) 75%);
+  color: var(--paper);
+  font-family: var(--body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 12px 10px;
+}
+#stage { position: relative; }
+#stage::after {
+  content: "";
+  position: absolute;
+  left: 6%; right: 6%; bottom: -18px; height: 30px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+#loading {
+  font: italic 500 1.1rem var(--display);
+  color: rgba(241, 230, 207, 0.6);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- pages ---------- */
+.bookfont { font-size: var(--fs); }
+.page {
+  background-color: var(--paper);
+  background-image: var(--grain);
+  color: var(--ink);
+  overflow: hidden;
+  font-family: var(--body);
+}
+.page.left  { background-image: linear-gradient(to left, rgba(90, 60, 25, 0.22), rgba(90, 60, 25, 0) 10%), linear-gradient(to right, rgba(90,60,25,0.07), rgba(90,60,25,0) 3%), var(--grain); }
+.page.right { background-image: linear-gradient(to right, rgba(90, 60, 25, 0.22), rgba(90, 60, 25, 0) 10%), linear-gradient(to left, rgba(90,60,25,0.07), rgba(90,60,25,0) 3%), var(--grain); }
+.page-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 7.5% 10% 5.5% 10%;
+}
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  min-height: 1.7em;
+  padding-bottom: 0.35em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid rgba(138, 61, 75, 0.28);
+  font: italic 400 0.8em/1.3 var(--display);
+  letter-spacing: 0.03em;
+  color: rgba(42, 40, 56, 0.6);
+}
+.page-head .ur { font: 400 1.15em/1 var(--calli); font-style: normal; color: var(--rose); }
+.page-head .ht { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.page-body {
+  --lh: 1.75em;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  line-height: var(--lh);
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--lh) - 1px), rgba(64, 86, 128, 0.13) calc(var(--lh) - 1px), rgba(64, 86, 128, 0.13) var(--lh));
+  background-position: 0 0.05em;
+}
+.page-body.rtl { --lh: 2.5em; direction: rtl; font-family: var(--urdu); font-size: 0.95em; }
+.page-foot {
+  padding-top: 0.6em;
+  display: flex;
+  justify-content: center;
+  gap: 0.6em;
+  align-items: baseline;
+  font: 500 0.8em/1 var(--display);
+  color: rgba(42, 40, 56, 0.55);
+  font-variant-numeric: oldstyle-nums;
+  min-height: 1.4em;
+}
+.page-foot .ur { font-family: var(--calli); font-size: 1.1em; }
+
+/* entry header */
+.entry-head { margin-bottom: var(--lh); }
+.entry-kind {
+  font: 600 0.7em/1.6 var(--display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+  direction: ltr;
+  text-align: left;
+}
+.rtl .entry-kind { text-align: right; }
+.entry-title {
+  margin: 0.15em 0 0.05em;
+  font: italic 500 1.95em/1.15 var(--display);
+  color: var(--ink);
+  text-wrap: balance;
+}
+.rtl .entry-title { font: 400 1.75em/1.9 var(--calli); }
+.divider { display: block; width: 7.5em; height: 0.8em; margin-top: 0.45em; color: var(--rose); opacity: 0.75; }
+.rtl .divider { margin-right: 0; margin-left: auto; }
+
+/* poems */
+.stanza { margin: 0 0 var(--lh); }
+.line { padding-left: 1.6em; text-indent: -1.6em; }
+.rtl .line { padding-left: 0; padding-right: 1.6em; }
+/* stories */
+.prose p { margin: 0; text-align: justify; hyphens: auto; text-indent: 1.6em; }
+.prose p.first, .prose p.cont { text-indent: 0; }
+.prose p.split { text-align-last: justify; }
+.prose p.dropcap::first-letter {
+  float: left;
+  font: 500 3.55em/0.82 var(--display);
+  padding: 0.07em 0.09em 0 0;
+  color: var(--rose);
+}
+.rtl.prose p { text-indent: 0; }
+/* thoughts */
+.thought p { margin: 0 0 var(--lh); font: italic 400 1.14em/var(--lh) var(--display); }
+.thought .qmark { display: block; height: var(--lh); font: 500 3em/1 var(--display); color: var(--rose); opacity: 0.6; }
+.rtl.thought p { font: 400 1em/var(--lh) var(--urdu); }
+.end-orn { display: block; margin: 0.2em auto 0; width: 1.4em; height: 1.4em; color: var(--rose); opacity: 0.6; }
+
+/* contents */
+.toc-head { text-align: center; margin-bottom: 0.6em; }
+.toc-head .ur { display: block; font: 400 2.2em/1.7 var(--calli); color: var(--rose); }
+.toc-head .en { display: block; font: 600 0.72em/1.4 var(--display); letter-spacing: 0.28em; text-transform: uppercase; color: rgba(42,40,56,0.6); }
+.toc-list { display: flex; flex-direction: column; }
+.toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  width: 100%;
+  min-height: var(--lh);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--ink);
+  font: 400 1em/var(--lh) var(--body);
+  text-align: left;
+  border-radius: 2px;
+}
+.toc-row > * { pointer-events: none; }
+.toc-row:hover .toc-title { color: var(--rose); }
+.toc-row:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.toc-kind { flex: 0 0 3.4em; font: 400 0.95em/1 var(--calli); color: var(--rose); text-align: right; }
+.toc-title { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
+.toc-title[dir="rtl"] { font-family: var(--calli); font-size: 0.95em; font-style: normal; }
+.toc-dots { flex: 1; border-bottom: 1px dotted rgba(42,40,56,0.4); transform: translateY(-0.3em); min-width: 1em; }
+.toc-num { font: 500 1em/1 var(--display); font-variant-numeric: tabular-nums oldstyle-nums; min-width: 1.4em; text-align: right; }
+.toc-empty { font-style: italic; color: rgba(42,40,56,0.55); text-align: center; margin-top: 2em; }
+
+/* title page, unwritten page */
+.center-page { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10%; gap: 0.4em; }
+.tp-ur { font: 400 3.1em/1.8 var(--calli); color: var(--ink); }
+.tp-en { font: 600 0.75em/1.4 var(--display); letter-spacing: 0.34em; text-transform: uppercase; color: var(--rose); }
+.tp-couplet { margin-top: 2.2em; direction: rtl; font: 400 0.98em/2.6 var(--urdu); color: var(--ink); }
+.tp-trans { max-width: 22em; font: italic 400 0.92em/1.5 var(--display); color: rgba(42,40,56,0.75); text-wrap: balance; }
+.tp-by { font: 500 0.75em/1.4 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(42,40,56,0.55); }
+.unwritten .ur { font: 400 1.6em/2 var(--calli); color: rgba(42,40,56,0.32); }
+.unwritten .en { font: italic 400 0.95em/1.4 var(--display); color: rgba(42,40,56,0.4); }
+
+/* covers and endpapers */
+.cover {
+  background-color: var(--lapis);
+  background-image: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.06), rgba(0,0,0,0.25) 80%), var(--grain);
+  color: var(--gold);
+}
+.cover-frame {
+  position: absolute;
+  inset: 5.5%;
+  border: 1.5px solid var(--gold);
+  box-shadow: inset 0 0 0 5px var(--lapis), inset 0 0 0 6.5px rgba(201, 165, 94, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.2em;
+  padding: 8%;
+}
+.cover-corner { position: absolute; width: 2.4em; height: 2.4em; color: var(--gold); opacity: 0.9; }
+.cover-corner.tl { top: 0.7em; left: 0.7em; } .cover-corner.tr { top: 0.7em; right: 0.7em; }
+.cover-corner.bl { bottom: 0.7em; left: 0.7em; } .cover-corner.br { bottom: 0.7em; right: 0.7em; }
+.shamsa { width: 38%; max-width: 11em; color: var(--gold); margin-bottom: 0.6em; filter: drop-shadow(0 1px 0 rgba(0,0,0,0.4)); }
+.cover-ur { font: 400 3.4em/1.7 var(--calli); text-shadow: 0 1px 0 rgba(0,0,0,0.45), 0 -1px 0 rgba(255,230,170,0.15); }
+.cover-en { font: 600 0.8em/1.4 var(--display); letter-spacing: 0.42em; text-transform: uppercase; padding-left: 0.42em; }
+.cover-sub { margin-top: 0.4em; font: italic 400 1em/1.4 var(--display); color: rgba(201, 165, 94, 0.8); }
+.cover-author { margin-top: 2.2em; font: 500 0.78em/1.4 var(--display); letter-spacing: 0.22em; text-transform: uppercase; color: rgba(201, 165, 94, 0.85); }
+.endpaper { background-color: #3a2a3a; background-image: var(--endpaper); }
+.endpaper .plate {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 62%; padding: 1.4em 1em;
+  background: var(--paper); background-image: var(--grain);
+  border: 1px solid rgba(138,61,75,0.4);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px rgba(138,61,75,0.4);
+  text-align: center; color: var(--ink);
+}
+.plate .ur { display: block; font: 400 1.4em/1.9 var(--calli); color: var(--rose); }
+.plate .en { display: block; font: italic 400 0.9em/1.4 var(--display); }
+
+/* ---------- controls ---------- */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 10px;
+  font: 500 0.95rem/1 var(--display);
+  color: rgba(241, 230, 207, 0.78);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  min-height: 36px;
+  padding: 0 0.9em;
+  border: 1px solid rgba(201, 165, 94, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn:hover { background: rgba(201, 165, 94, 0.1); border-color: rgba(201, 165, 94, 0.55); color: var(--paper); }
+.btn:focus-visible, #vol:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.btn svg { width: 1.05em; height: 1.05em; }
+.btn.icon { padding: 0; width: 36px; justify-content: center; }
+.btn[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); background: rgba(201, 165, 94, 0.1); }
+#pageinfo { min-width: 7.5em; text-align: center; font-variant-numeric: tabular-nums; color: rgba(241, 230, 207, 0.55); font-style: italic; }
+.music { display: inline-flex; align-items: center; gap: 8px; }
+#vol { width: 78px; accent-color: var(--gold); }
+#vol[hidden] { display: none; }
+.sep { width: 1px; height: 20px; background: rgba(201, 165, 94, 0.2); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* measuring room, never seen */
+#measure { position: fixed; left: -10000px; top: 0; visibility: hidden; pointer-events: none; }
+#measure .page { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+/* fallback when the page-turn script is unavailable */
+#stage.nolib { overflow-y: auto; height: calc(100vh - 90px); display: flex; flex-direction: column; gap: 16px; }
+#stage.nolib .page { position: relative; flex: 0 0 auto; }
+
+@media (max-width: 520px) {
+  #controls { font-size: 0.88rem; gap: 6px; }
+  .label-long, .sep { display: none; }
+  #vol { width: 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage" aria-live="polite"><p id="loading">Opening the diary…</p></div>
+  <nav id="controls" aria-label="Diary controls" hidden>
+    <button class="btn icon" id="prev" type="button" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="btn" id="toc" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      Contents
+    </button>
+    <span id="pageinfo">Cover</span>
+    <button class="btn" id="latest" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4z"/></svg>
+      <span>Latest<span class="label-long"> entry</span></span>
+    </button>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="music">
+      <button class="btn" id="music" type="button" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+        <span id="musiclabel">Play piano</span>
+      </button>
+      <label class="visually-hidden" for="vol">Piano volume</label>
+      <input id="vol" type="range" min="0" max="100" value="45" hidden>
+    </span>
+    <button class="btn icon" id="next" type="button" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </nav>
+</div>
+<div id="measure" class="bookfont" aria-hidden="true"></div>
+
+<script src="lib/page-flip.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- small helpers ---------------- */
+  const KINDS = {
+    poem:    { en: "Poem",    ur: "نظم" },
+    thought: { en: "Thought", ur: "خیال" },
+    story:   { en: "Story",   ur: "کہانی" }
+  };
+  const UR_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
+  const toUrdu = n => String(n).replace(/\d/g, d => UR_DIGITS[d]);
+  const reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    if (attrs) for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "html") el.innerHTML = v;
+      else el.setAttribute(k, v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null) continue;
+      el.appendChild(typeof kid === "string" ? document.createTextNode(kid) : kid);
+    }
+    return el;
+  }
+  function fmtDate(iso, lang) {
+    const d = new Date(iso + "T12:00:00");
+    if (isNaN(d)) return iso || "";
+    try {
+      return d.toLocaleDateString(lang === "ur" ? "ur-PK" : "en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    } catch (e) { return iso; }
+  }
+
+  /* ---------------- ornaments (Persianate geometry) ---------------- */
+  function starPoints(cx, cy, r, inner) {
+    const pts = [];
+    for (let i = 0; i < 16; i++) {
+      const a = (Math.PI / 8) * i - Math.PI / 2;
+      const rr = i % 2 === 0 ? r : r * inner;
+      pts.push((cx + rr * Math.cos(a)).toFixed(2) + "," + (cy + rr * Math.sin(a)).toFixed(2));
+    }
+    return pts.join(" ");
+  }
+  const dividerSVG = () =>
+    `<svg class="divider" viewBox="0 0 120 12" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><line x1="0" y1="6" x2="48" y2="6"/><line x1="72" y1="6" x2="120" y2="6"/></g><polygon points="${starPoints(60, 6, 5.6, 0.72)}" fill="currentColor"/><circle cx="51" cy="6" r="1" fill="currentColor"/><circle cx="69" cy="6" r="1" fill="currentColor"/></svg>`;
+  const endOrnSVG = () =>
+    `<svg class="end-orn" viewBox="0 0 24 24" aria-hidden="true"><polygon points="${starPoints(12, 12, 10, 0.72)}" fill="none" stroke="currentColor" stroke-width="1"/><polygon points="${starPoints(12, 12, 4.5, 0.72)}" fill="currentColor"/></svg>`;
+  function shamsaSVG() {
+    let petals = "";
+    for (let i = 0; i < 16; i++) {
+      petals += `<ellipse cx="50" cy="20" rx="5.2" ry="13" transform="rotate(${i * 22.5} 50 50)"/>`;
+    }
+    let dots = "";
+    for (let i = 0; i < 32; i++) {
+      const a = (Math.PI / 16) * i;
+      dots += `<circle cx="${(50 + 46 * Math.cos(a)).toFixed(2)}" cy="${(50 + 46 * Math.sin(a)).toFixed(2)}" r="0.9"/>`;
+    }
+    return `<svg class="shamsa" viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="0.7">${petals}<circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="22"/></g>
+      <g fill="currentColor">${dots}</g>
+      <polygon points="${starPoints(50, 50, 19, 0.72)}" fill="none" stroke="currentColor" stroke-width="0.9"/>
+      <polygon points="${starPoints(50, 50, 9, 0.72)}" fill="currentColor"/>
+    </svg>`;
+  }
+  const cornerSVG = rot =>
+    `<svg viewBox="0 0 40 40" style="transform:rotate(${rot}deg)" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M2 38 V2 H38"/><path d="M7 33 V7 H33"/><path d="M7 7 Q20 10 22 22 Q10 20 7 7z"/></g><circle cx="14" cy="14" r="1.6" fill="currentColor"/></svg>`;
+
+  function makeTextures() {
+    try {
+      const c = document.createElement("canvas");
+      c.width = c.height = 220;
+      const g = c.getContext("2d");
+      const img = g.createImageData(220, 220);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 120 + Math.random() * 80;
+        img.data[i] = v; img.data[i + 1] = v * 0.92; img.data[i + 2] = v * 0.78;
+        img.data[i + 3] = Math.random() * 22;
+      }
+      g.putImageData(img, 0, 0);
+      // a few soft fibres
+      g.strokeStyle = "rgba(120, 90, 50, 0.05)";
+      for (let i = 0; i < 40; i++) {
+        g.beginPath();
+        const x = Math.random() * 220, y = Math.random() * 220;
+        g.moveTo(x, y);
+        g.quadraticCurveTo(x + Math.random() * 30 - 15, y + Math.random() * 30 - 15, x + Math.random() * 40 - 20, y + Math.random() * 40 - 20);
+        g.stroke();
+      }
+      document.documentElement.style.setProperty("--grain", `url(${c.toDataURL()})`);
+    } catch (e) { /* plain paper is fine */ }
+    const tile = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44"><rect width="44" height="44" fill="#3a2a3a"/><polygon points="${starPoints(22, 22, 9, 0.72)}" fill="none" stroke="#c9a55e" stroke-opacity="0.55" stroke-width="0.8"/><polygon points="${starPoints(0, 0, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(44, 0, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(0, 44, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(44, 44, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/></svg>`;
+    document.documentElement.style.setProperty("--endpaper", `url("data:image/svg+xml,${encodeURIComponent(tile)}")`);
+  }
+
+  /* ---------------- page factory ---------------- */
+  function blankPage(cls) {
+    return h("div", { class: "page " + (cls || "") });
+  }
+  function ruledPage(rtl) {
+    const head = h("div", { class: "page-head" });
+    const body = h("div", { class: "page-body" + (rtl ? " rtl" : "") });
+    const foot = h("div", { class: "page-foot" });
+    const inner = h("div", { class: "page-inner" }, head, body, foot);
+    const page = h("div", { class: "page ruled" }, inner);
+    return { page, head, body, foot };
+  }
+  const overflows = el => el.scrollHeight > el.clientHeight + 1;
+
+  /* split a block so its first part fits in `body`; returns [fitting part or null, rest or null] */
+  function splitBlock(block, body) {
+    if (block.classList.contains("stanza")) {
+      const lines = Array.from(block.children);
+      const head = block.cloneNode(false);
+      body.appendChild(head);
+      let k = 0;
+      for (; k < lines.length; k++) {
+        head.appendChild(lines[k].cloneNode(true));
+        if (overflows(body)) { head.lastChild.remove(); break; }
+      }
+      body.removeChild(head);
+      if (k === 0) return [null, block];
+      if (k === lines.length) return [head, null];
+      const tail = block.cloneNode(false);
+      tail.classList.add("cont");
+      lines.slice(k).forEach(l => tail.appendChild(l));
+      return [head, tail];
+    }
+    // prose paragraph: binary search on words
+    const words = block.textContent.split(/\s+/).filter(Boolean);
+    const head = block.cloneNode(false);
+    body.appendChild(head);
+    let lo = 0, hi = words.length;
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      head.textContent = words.slice(0, mid).join(" ");
+      if (overflows(body)) hi = mid - 1; else lo = mid;
+    }
+    body.removeChild(head);
+    if (lo === 0) return [null, block];
+    if (lo === words.length) { head.textContent = words.join(" "); return [head, null]; }
+    head.textContent = words.slice(0, lo).join(" ");
+    head.classList.add("split");
+    const tail = block.cloneNode(false);
+    tail.classList.remove("dropcap", "first");
+    tail.classList.add("cont");
+    tail.textContent = words.slice(lo).join(" ");
+    return [head, tail];
+  }
+
+  function makeBlocks(post) {
+    const chunks = String(post.body || "").replace(/\r/g, "").split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+    if (post.type === "poem") {
+      return chunks.map(ch => h("div", { class: "stanza" }, ch.split("\n").map(l => h("div", { class: "line" }, l.trim() || " "))));
+    }
+    return chunks.map((ch, i) => {
+      const cls = [];
+      if (i === 0) cls.push("first");
+      if (i === 0 && post.type === "story" && post.lang !== "ur") cls.push("dropcap");
+      return h("p", { class: cls.join(" ") || null }, ch.replace(/\s*\n\s*/g, " "));
+    });
+  }
+
+  function bodyClass(post) {
+    return post.type === "poem" ? "poem" : post.type === "thought" ? "thought" : "prose";
+  }
+
+  function paginateEntry(post, measure) {
+    const rtl = post.lang === "ur";
+    const kind = KINDS[post.type] || KINDS.thought;
+    const pages = [];
+    const newPage = first => {
+      const p = ruledPage(rtl);
+      p.body.classList.add(bodyClass(post));
+      if (first) {
+        p.head.append(h("span", { class: "ht" }, fmtDate(post.date, "en")), h("span", { class: "ur" }, kind.ur));
+        const eh = h("div", { class: "entry-head" },
+          h("div", { class: "entry-kind" }, kind.en + (post.sample ? " · sample entry" : "")),
+          h("h2", { class: "entry-title", dir: "auto" }, post.title || "Untitled"));
+        eh.insertAdjacentHTML("beforeend", dividerSVG());
+        p.body.appendChild(eh);
+        if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, rtl ? "”" : "“"));
+      } else {
+        p.head.append(h("span", { class: "ht", dir: "auto" }, post.title || "Untitled"), h("span", null, "continued"));
+      }
+      p.count = 0;
+      measure.appendChild(p.page);
+      pages.push(p);
+      return p;
+    };
+    let pg = newPage(true);
+    for (const block of makeBlocks(post)) {
+      let b = block;
+      while (b) {
+        pg.body.appendChild(b);
+        if (!overflows(pg.body)) { pg.count++; break; }
+        pg.body.removeChild(b);
+        const [head, tail] = splitBlock(b, pg.body);
+        if (head) { pg.body.appendChild(head); pg.count++; b = tail; }
+        else if (pg.count === 0 && pg.fresh) { pg.body.appendChild(b); pg.count++; break; } // taller than any page
+        if (!b) break;
+        pg = newPage(false);
+        pg.fresh = true;
+      }
+    }
+    const orn = h("div", { html: endOrnSVG() });
+    pg.body.appendChild(orn);
+    if (overflows(pg.body)) orn.remove();
+    return pages;
+  }
+
+  function buildContents(posts, measure, starts) {
+    const pages = [];
+    const newPage = first => {
+      const p = ruledPage(false);
+      p.page.classList.add("toc-page");
+      if (first) {
+        p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "ur" }, "فہرست"), h("span", { class: "en" }, "Contents")));
+      } else {
+        p.head.append(h("span", null, "Contents"), h("span", null, "continued"));
+      }
+      p.list = h("div", { class: "toc-list" });
+      p.body.appendChild(p.list);
+      measure.appendChild(p.page);
+      pages.push(p);
+      return p;
+    };
+    let pg = newPage(true);
+    if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, "The first entry is still waiting to be written."));
+    posts.forEach((post, i) => {
+      const kind = KINDS[post.type] || KINDS.thought;
+      const num = starts ? starts[i] : 88;
+      const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
+        h("span", { class: "toc-kind" }, kind.ur),
+        h("span", { class: "toc-title", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
+        h("span", { class: "toc-dots" }),
+        h("span", { class: "toc-num" }, String(num)));
+      pg.list.appendChild(row);
+      if (overflows(pg.body) && pg.list.children.length > 1) {
+        row.remove();
+        pg = newPage(false);
+        pg.list.appendChild(row);
+      }
+    });
+    return pages;
+  }
+
+  function coverPage(d) {
+    const p = blankPage("cover");
+    const frame = h("div", { class: "cover-frame" });
+    ["tl", "tr", "br", "bl"].forEach((c, i) => frame.appendChild(h("div", { class: "cover-corner " + c, html: cornerSVG(i * 90) })));
+    frame.insertAdjacentHTML("beforeend", shamsaSVG());
+    frame.append(
+      h("div", { class: "cover-ur", lang: "ur" }, d.title_ur || "روزنامچہ"),
+      h("div", { class: "cover-en" }, d.title_en || "Roznamcha"),
+      h("div", { class: "cover-sub" }, d.subtitle || ""),
+      h("div", { class: "cover-author" }, d.author || ""));
+    p.appendChild(frame);
+    p.setAttribute("data-density", "hard");
+    return p;
+  }
+  function backCover() {
+    const p = blankPage("cover");
+    const frame = h("div", { class: "cover-frame" });
+    ["tl", "tr", "br", "bl"].forEach((c, i) => frame.appendChild(h("div", { class: "cover-corner " + c, html: cornerSVG(i * 90) })));
+    frame.insertAdjacentHTML("beforeend", `<svg viewBox="0 0 24 24" style="width:2.2em;height:2.2em;color:var(--gold)" aria-hidden="true"><polygon points="${starPoints(12, 12, 10, 0.72)}" fill="none" stroke="currentColor" stroke-width="0.9"/><polygon points="${starPoints(12, 12, 4.5, 0.72)}" fill="currentColor"/></svg>`);
+    p.appendChild(frame);
+    p.setAttribute("data-density", "hard");
+    return p;
+  }
+  function endpaper(ur, en) {
+    const p = blankPage("endpaper");
+    p.appendChild(h("div", { class: "plate" }, h("span", { class: "ur", lang: "ur" }, ur), h("span", { class: "en" }, en)));
+    return p;
+  }
+  function titlePage(d) {
+    const p = blankPage("titlepage");
+    const c = h("div", { class: "center-page" },
+      h("div", { class: "tp-ur", lang: "ur" }, d.title_ur || "روزنامچہ"),
+      h("div", { class: "tp-en" }, d.title_en || "Roznamcha"));
+    if (d.epigraph_ur && d.epigraph_ur.length) {
+      c.appendChild(h("div", { class: "tp-couplet", lang: "ur" }, d.epigraph_ur.map(l => h("div", null, l))));
+      if (d.epigraph_en) c.appendChild(h("div", { class: "tp-trans" }, d.epigraph_en));
+      if (d.epigraph_by) c.appendChild(h("div", { class: "tp-by" }, d.epigraph_by));
+    }
+    p.appendChild(c);
+    return p;
+  }
+  function unwrittenPage() {
+    const p = blankPage("unwritten");
+    p.appendChild(h("div", { class: "center-page" }, h("div", { class: "ur", lang: "ur" }, "ابھی لکھا جانا ہے"), h("div", { class: "en" }, "pages still to be written")));
+    return p;
+  }
+
+  /* ---------------- assemble the book ---------------- */
+  function geometry() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const availH = vh - (vw < 520 ? 120 : 92);
+    const spread = vw >= 760;
+    let w, hgt;
+    if (spread) {
+      hgt = Math.min(availH, 820);
+      w = Math.round(hgt * 0.7);
+      if (2 * w > vw - 48) { w = Math.floor((vw - 48) / 2); hgt = Math.round(w / 0.7); }
+    } else {
+      w = Math.min(vw - 24, 480);
+      hgt = Math.round(w / 0.64);
+      if (hgt > availH) { hgt = availH; w = Math.round(hgt * 0.64); }
+    }
+    const fs = Math.max(13.5, Math.min(18.5, w * 0.034));
+    return { w, h: hgt, spread, fs };
+  }
+
+  function buildBook(data, geo) {
+    const measure = document.getElementById("measure");
+    measure.innerHTML = "";
+    measure.style.width = geo.w + "px";
+    measure.style.height = geo.h + "px";
+    document.documentElement.style.setProperty("--fs", geo.fs.toFixed(2) + "px");
+    const sizePage = el => { el.style.width = geo.w + "px"; el.style.height = geo.h + "px"; };
+
+    const posts = (data.posts || []).slice();
+    const d = data.diary || {};
+
+    // 1. entries
+    const entryPages = posts.map(post => {
+      const pgs = paginateEntry(post, measure);
+      return pgs;
+    });
+    // sizes are needed before measuring; re-run once sized (pages are created sized below)
+    // 2. contents (dry run to learn its length)
+    let toc = buildContents(posts, measure, null);
+    const tocStart = 3;
+    const starts = [];
+    let idx = tocStart + toc.length;
+    entryPages.forEach(pgs => { starts.push(idx); idx += pgs.length; });
+    toc.forEach(p => p.page.remove());
+    toc = buildContents(posts, measure, starts);
+
+    const all = [];
+    const meta = []; // per page: entry index or null
+    const push = (el, entry) => { all.push(el); meta.push(entry == null ? null : entry); };
+    push(coverPage(d));
+    push(endpaper(d.title_ur || "روزنامچہ", d.author ? "the diary of " + d.author : "a diary"));
+    push(titlePage(d));
+    toc.forEach(p => push(p.page));
+    entryPages.forEach((pgs, i) => pgs.forEach(p => push(p.page, i)));
+    push(unwrittenPage());
+    if ((all.length + 2) % 2 !== 0) push(unwrittenPage());
+    push(endpaper("آخر", "the end, for now"));
+    push(backCover());
+
+    // page numbers, sides
+    all.forEach((el, i) => {
+      el.classList.add(geo.spread && i % 2 === 1 ? "left" : "right");
+      const foot = el.querySelector(".page-foot");
+      if (foot) foot.append(h("span", null, String(i)), h("span", { class: "ur", "aria-hidden": "true" }, toUrdu(i)));
+      sizePage(el);
+    });
+    return { pages: all, meta, starts, posts };
+  }
+
+  /* ---------------- piano, generated live in the browser ---------------- */
+  class Piano {
+    constructor() { this.ctx = null; this.on = false; this.vol = 0.45; this.timer = null; this.next = 0; this.mel = 4; this.bar = 0; }
+    setup() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) throw new Error("no audio");
+      const ctx = this.ctx = new AC();
+      this.master = ctx.createGain(); this.master.gain.value = 0;
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -20; comp.ratio.value = 3;
+      this.master.connect(comp); comp.connect(ctx.destination);
+      this.bus = ctx.createGain();
+      const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2400; lp.Q.value = 0.3;
+      this.bus.connect(lp);
+      const dry = ctx.createGain(); dry.gain.value = 0.62;
+      const wet = ctx.createGain(); wet.gain.value = 0.6;
+      const rev = ctx.createConvolver(); rev.buffer = this.impulse(4.5);
+      lp.connect(dry); dry.connect(this.master);
+      lp.connect(rev); rev.connect(wet); wet.connect(this.master);
+      this.fx = ctx.createGain(); this.fx.gain.value = 0.9; this.fx.connect(this.master);
+    }
+    impulse(sec) {
+      const ctx = this.ctx, rate = ctx.sampleRate, len = Math.floor(rate * sec);
+      const buf = ctx.createBuffer(2, len, rate);
+      for (let ch = 0; ch < 2; ch++) {
+        const data = buf.getChannelData(ch);
+        for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3) * (i < rate * 0.012 ? i / (rate * 0.012) : 1);
+      }
+      return buf;
+    }
+    note(midi, t, vel, len) {
+      const ctx = this.ctx;
+      const f = 440 * Math.pow(2, (midi - 69) / 12);
+      const env = ctx.createGain();
+      const peak = 0.13 * vel;
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.exponentialRampToValueAtTime(peak, t + 0.012);
+      env.gain.exponentialRampToValueAtTime(peak * 0.32, t + 0.6);
+      env.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      env.connect(this.bus);
+      const partials = [[1, 1], [2, 0.38], [3, 0.2], [4, 0.1], [5, 0.05], [6, 0.03]];
+      for (const [k, a] of partials) {
+        const fk = f * k * (1 + 0.00035 * k * k);
+        if (fk > 8000) continue;
+        const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = fk;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(a, t);
+        g.gain.exponentialRampToValueAtTime(a * 0.01 + 0.0001, t + len / Math.pow(k, 0.7));
+        o.connect(g); g.connect(env);
+        o.start(t); o.stop(t + len + 0.05);
+      }
+      const o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = f * 1.0014;
+      const g2 = ctx.createGain(); g2.gain.value = 0.32;
+      o2.connect(g2); g2.connect(env); o2.start(t); o2.stop(t + len + 0.05);
+    }
+    scheduleBar(t) {
+      const BAR = 8.4;
+      const chords = [
+        [50, 57, 61, 66],   // Dmaj7
+        [47, 54, 57, 62],   // Bm7
+        [43, 50, 54, 59],   // Gmaj7
+        [45, 52, 57, 59, 64] // Asus2
+      ];
+      const alt = [40, 47, 55, 62]; // Em7, now and then
+      let chord = chords[this.bar % 4];
+      if (this.bar % 4 === 3 && Math.random() < 0.3) chord = alt;
+      const r = () => (Math.random() - 0.5) * 0.06;
+      // left hand: bass, then a slow rolled chord
+      this.note(chord[0] - 12, t, 0.55, 7.5);
+      chord.forEach((m, i) => this.note(m, t + 0.42 * (i + 1) + r(), 0.32 + Math.random() * 0.1, 6.5));
+      if (Math.random() < 0.55) {
+        this.note(chord[1], t + BAR / 2 + r(), 0.22, 4.5);
+        this.note(chord[2], t + BAR / 2 + 0.5 + r(), 0.2, 4.5);
+      }
+      // right hand: a wandering pentatonic line
+      const scale = [66, 69, 71, 74, 76, 78, 81, 83, 86];
+      const slots = [1.9, 3.1, 4.4, 5.3, 6.6, 7.6].filter(() => Math.random() < 0.6);
+      if (this.bar % 8 === 7) slots.length = Math.min(slots.length, 1); // breathe
+      for (const s of slots) {
+        this.mel = Math.max(0, Math.min(scale.length - 1, this.mel + Math.round((Math.random() - 0.5) * 3.2)));
+        this.note(scale[this.mel], t + s + r(), 0.26 + Math.random() * 0.16, 5);
+      }
+      this.bar++;
+      return BAR;
+    }
+    async start() {
+      if (!this.ctx) this.setup();
+      if (this.ctx.state === "suspended") await this.ctx.resume();
+      const now = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(now);
+      this.master.gain.setValueAtTime(Math.max(this.master.gain.value, 0.0001), now);
+      this.master.gain.linearRampToValueAtTime(this.vol, now + 2.5);
+      this.next = now + 0.2;
+      clearInterval(this.timer);
+      const tick = () => { while (this.next < this.ctx.currentTime + 1.5) this.next += this.scheduleBar(this.next); };
+      tick();
+      this.timer = setInterval(tick, 300);
+      this.on = true;
+    }
+    stop() {
+      if (!this.ctx) return;
+      clearInterval(this.timer); this.timer = null;
+      const now = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(now);
+      this.master.gain.setValueAtTime(this.master.gain.value, now);
+      this.master.gain.linearRampToValueAtTime(0.0001, now + 1.2);
+      this.on = false;
+      setTimeout(() => { if (!this.on && this.ctx) this.ctx.suspend().catch(() => {}); }, 1400);
+    }
+    setVolume(v) {
+      this.vol = v;
+      if (this.ctx && this.on) {
+        const now = this.ctx.currentTime;
+        this.master.gain.cancelScheduledValues(now);
+        this.master.gain.setValueAtTime(this.master.gain.value, now);
+        this.master.gain.linearRampToValueAtTime(Math.max(v, 0.0001), now + 0.15);
+      }
+    }
+    rustle() {
+      if (!this.ctx || !this.on) return;
+      const ctx = this.ctx, t = ctx.currentTime, len = 0.45;
+      const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * len), ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (0.6 + 0.4 * Math.random());
+      const src = ctx.createBufferSource(); src.buffer = buf;
+      const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = 0.8;
+      bp.frequency.setValueAtTime(3200, t); bp.frequency.exponentialRampToValueAtTime(900, t + len);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.09, t + 0.08);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      src.connect(bp); bp.connect(g); g.connect(this.fx);
+      src.start(t);
+    }
+  }
+
+  /* ---------------- app ---------------- */
+  const stage = document.getElementById("stage");
+  const controls = document.getElementById("controls");
+  const info = document.getElementById("pageinfo");
+  const piano = new Piano();
+  let flip = null, book = null, geo = null, data = null, current = 0;
+
+  function entryAt(i) { return book && book.meta[i] != null ? book.meta[i] : null; }
+  function indexForHash() {
+    const id = decodeURIComponent((location.hash || "").slice(1));
+    if (!id || !book) return null;
+    const i = book.posts.findIndex(p => p.id === id);
+    return i >= 0 ? book.starts[i] : null;
+  }
+  function setHash(i) {
+    try {
+      const e = entryAt(i);
+      const want = e != null ? "#" + book.posts[e].id : "";
+      if ((location.hash || "") !== want) history.replaceState(null, "", want || (location.pathname + location.search));
+    } catch (err) { /* hash is a convenience only */ }
+  }
+  function describe(i) {
+    const n = book.pages.length;
+    if (i === 0) return "Cover";
+    if (i >= n - 1) return "Back cover";
+    if (!geo.spread) return `Page ${i} of ${n - 2}`;
+    const left = i % 2 === 1 ? i : i - 1;
+    return `Pages ${left}–${left + 1}`;
+  }
+  function onPage(i) {
+    current = i;
+    info.textContent = describe(i);
+    setHash(i);
+  }
+  function go(i) {
+    if (!flip) return;
+    i = Math.max(0, Math.min(book.pages.length - 1, i));
+    if (reduced) flip.turnToPage(i), onPage(i); else flip.flip(i);
+  }
+
+  function render(startAt) {
+    geo = geometry();
+    book = buildBook(data, geo);
+    if (flip) { try { flip.destroy(); } catch (e) {} flip = null; }
+    stage.innerHTML = "";
+    stage.classList.remove("nolib");
+    stage.style.width = (geo.spread ? geo.w * 2 : geo.w) + "px";
+    stage.style.height = geo.h + "px";
+    const block = h("div", { class: "bookfont", id: "book" });
+    stage.appendChild(block);
+    book.pages.forEach(p => block.appendChild(p));
+    document.getElementById("measure").innerHTML = "";
+    const start = Math.max(0, Math.min(book.pages.length - 1, startAt || 0));
+    if (!window.St || !St.PageFlip) {
+      stage.classList.add("nolib");
+      stage.style.height = "";
+      onPage(start);
+      return;
+    }
+    flip = new St.PageFlip(block, {
+      width: geo.w,
+      height: geo.h,
+      size: "fixed",
+      showCover: true,
+      usePortrait: true,
+      autoSize: true,
+      drawShadow: true,
+      maxShadowOpacity: 0.35,
+      flippingTime: reduced ? 250 : 950,
+      mobileScrollSupport: false,
+      startPage: start,
+      showPageCorners: true
+    });
+    flip.loadFromHTML(book.pages);
+    flip.on("flip", e => onPage(e.data));
+    flip.on("changeState", e => { if (e.data === "flipping") piano.rustle(); });
+    onPage(flip.getCurrentPageIndex ? flip.getCurrentPageIndex() : start);
+    block.addEventListener("click", e => {
+      const row = e.target.closest && e.target.closest(".toc-row");
+      if (row && row.dataset.page) go(parseInt(row.dataset.page, 10));
+    });
+  }
+
+  function wire() {
+    document.getElementById("prev").addEventListener("click", () => flip && flip.flipPrev());
+    document.getElementById("next").addEventListener("click", () => flip && flip.flipNext());
+    document.getElementById("toc").addEventListener("click", () => go(3));
+    document.getElementById("latest").addEventListener("click", () => {
+      if (book.starts.length) go(book.starts[book.starts.length - 1]);
+    });
+    document.addEventListener("keydown", e => {
+      if (e.target && /input|textarea/i.test(e.target.tagName)) return;
+      if (e.key === "ArrowRight") { flip && flip.flipNext(); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { flip && flip.flipPrev(); e.preventDefault(); }
+    });
+    const mbtn = document.getElementById("music"), mlabel = document.getElementById("musiclabel"), vol = document.getElementById("vol");
+    mbtn.addEventListener("click", async () => {
+      try {
+        if (piano.on) { piano.stop(); mbtn.setAttribute("aria-pressed", "false"); mlabel.textContent = "Play piano"; vol.hidden = true; }
+        else { await piano.start(); mbtn.setAttribute("aria-pressed", "true"); mlabel.textContent = "Piano on"; vol.hidden = false; }
+      } catch (e) {
+        mlabel.textContent = "Sound unavailable";
+        mbtn.disabled = true;
+      }
+    });
+    vol.addEventListener("input", () => piano.setVolume(vol.value / 100));
+    document.addEventListener("visibilitychange", () => {
+      if (!piano.ctx) return;
+      if (document.hidden && piano.on) piano.ctx.suspend().catch(() => {});
+      else if (!document.hidden && piano.on) piano.ctx.resume().catch(() => {});
+    });
+    window.addEventListener("hashchange", () => { const i = indexForHash(); if (i != null && i !== current) go(i); });
+    let t = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const g = geometry();
+        if (Math.abs(g.w - geo.w) > 6 || Math.abs(g.h - geo.h) > 6 || g.spread !== geo.spread) render(current);
+      }, 280);
+    });
+  }
+
+  async function main() {
+    makeTextures();
+    try {
+      const r = await fetch("posts.json", { cache: "no-store" });
+      if (!r.ok) throw new Error(r.status);
+      data = await r.json();
+    } catch (e) {
+      document.getElementById("loading").textContent = "The diary’s pages could not be loaded. Reload the page to try again.";
+      return;
+    }
+    if (data.diary && data.diary.title_en) document.title = data.diary.title_en;
+    try {
+      await Promise.race([
+        Promise.all(["400 1em Gulzar", "400 1em 'Noto Nastaliq Urdu'", "italic 500 1em 'Cormorant Garamond'", "500 1em 'Cormorant Garamond'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'"]
+          .map(f => document.fonts.load(f, "روزنامچہ Aa"))),
+        new Promise(res => setTimeout(res, 3500))
+      ]);
+    } catch (e) { /* fall back to system fonts */ }
+    render(0);
+    controls.hidden = false;
+    wire();
+    const i = indexForHash();
+    if (i != null) setTimeout(() => go(i), 400);
+  }
+  main();
+})();
+</script>
+</body>
+</html>
