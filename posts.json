@@ -1,12 +1,13 @@
 {
   "diary": {
-    "title_ur": "روزنامچہ",
-    "title_en": "Roznamcha",
-    "subtitle": "poems, thoughts & stories",
-    "author": "Your Name",
-    "epigraph_ur": ["ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے", "بہت نکلے مرے ارمان لیکن پھر بھی کم نکلے"],
-    "epigraph_en": "A thousand longings, each one worth a life; many came true, and still they were too few.",
-    "epigraph_by": "Mirza Ghalib"
+    "title_hi": "राही",
+    "title_en": "Raahi",
+    "tagline": "not there yet",
+    "tagline_hi": "मंज़िल अभी दूर है",
+    "author": "Ashish Jain",
+    "author_hi": "आशीष जैन",
+    "subtitle": "poems · thoughts · stories",
+    "ticket_no": "No. 000001"
   },
   "posts": [
     {
@@ -28,13 +29,13 @@
       "body": "Some letters are not meant to be posted. Writing them is the whole journey; the envelope was only ever a place to keep the courage.\n\nI have a drawer of them. Each one is a door I closed gently instead of slamming."
     },
     {
-      "id": "shaam-ki-dehleez",
+      "id": "raste-ne-poocha",
       "type": "poem",
-      "title": "شام کی دہلیز",
+      "title": "रास्ते ने पूछा",
       "date": "2026-11-18",
-      "lang": "ur",
+      "lang": "hi",
       "sample": true,
-      "body": "شام کی دہلیز پر بیٹھا ہوں میں\nلفظ چنتا ہوں چراغوں کی طرح\n\nرات آئے گی تو پڑھ لے گی انہیں\nاپنی پلکوں پر سجا کر ہر سطر"
+      "body": "रास्ते ने पूछा, कहाँ तक चलोगे?\nमैंने कहा, जहाँ तक तुम ले चलो।\n\nपैरों में थकान है, आँखों में सुबह,\nमंज़िल अभी दूर है, पर चलना अच्छा लगता है।"
     },
     {
       "id": "the-tailor-of-anarkali",

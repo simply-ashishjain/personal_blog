@@ -1,9 +1,11 @@
-# Roznamcha — روزنامچہ
+# Raahi — राही
 
-A diary of poems, thoughts and stories, laid out as a book you turn page by page.
+*not there yet · मंज़िल अभी दूर है*
 
-- `index.html` — the book: page turns, Urdu calligraphy, and quiet piano composed live in the browser.
+Poems, thoughts and stories by Ashish Jain, in English and Hindi, laid out as a one-way ticket of a diary you turn page by page.
+
+- `index.html` — the book: page turns, ticket styling, Hindi and English type, and quiet piano composed live in the browser.
 - `posts.json` — every entry. Adding a post only ever changes this file.
 - `lib/page-flip.js` — page-turn library ([StPageFlip](https://github.com/Nodlik/StPageFlip), MIT licence).
 
-Each entry can be linked directly with `#<id>`, for example `…/#the-lamp-stays-lit`.
+Each entry can be linked directly with `#<id>`, for example `…/#raste-ne-poocha`.

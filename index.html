@@ -3,35 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roznamcha</title>
+<title>Raahi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Special+Elite&family=Tiro+Devanagari+Hindi:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Nastaliq+Urdu:wght@400&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Layout: an open diary on a dim desk under lamplight; a two-page spread on wide screens, one page on phones */
-  --night: #11151c;
-  --lapis: #1b2946;
-  --gold: #c9a55e;
-  --paper: #f1e6cf;
-  --ink: #2a2838;
-  --rose: #8a3d4b;
-  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  /* Layout: a one-way ticket diary on a slate desk; a two-page spread on wide screens, one page on phones */
+  --slate: #2b2d42;
+  --paper: #f2e6cc;
+  --ink: #2b2d42;
+  --stamp: #b23a3a;
+  --brass: #e2c48a;
+  --faded: rgba(43, 45, 66, 0.62);
+  --display: "Rozha One", "Tiro Devanagari Hindi", Georgia, serif;
+  --type: "Special Elite", "Courier New", monospace;
   --body: "EB Garamond", "Iowan Old Style", Georgia, serif;
-  --urdu: "Noto Nastaliq Urdu", "Gulzar", "Jameel Noori Nastaleeq", serif;
-  --calli: "Gulzar", "Noto Nastaliq Urdu", serif;
+  --deva: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+  --urdu: "Noto Nastaliq Urdu", serif;
   --fs: 17px;
   --grain: none;
-  --endpaper: none;
+  --routes: none;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
 body {
-  background-color: var(--night);
+  background-color: var(--slate);
   background-image:
-    radial-gradient(ellipse 60% 50% at 50% 34%, rgba(214, 170, 102, 0.13) 0%, rgba(214, 170, 102, 0) 70%),
-    radial-gradient(ellipse 90% 80% at 50% 45%, #1b2029 0%, var(--night) 75%);
+    radial-gradient(ellipse 60% 50% at 50% 34%, rgba(242, 230, 204, 0.08) 0%, rgba(242, 230, 204, 0) 70%),
+    radial-gradient(ellipse 90% 80% at 50% 45%, #33364f 0%, #222337 80%);
   color: var(--paper);
   font-family: var(--body);
   overflow: hidden;
@@ -51,15 +52,11 @@ body {
   content: "";
   position: absolute;
   left: 6%; right: 6%; bottom: -18px; height: 30px;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 70%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);
   z-index: -1;
   pointer-events: none;
 }
-#loading {
-  font: italic 500 1.1rem var(--display);
-  color: rgba(241, 230, 207, 0.6);
-  letter-spacing: 0.04em;
-}
+#loading { font: 400 1rem var(--type); color: rgba(242, 230, 204, 0.6); letter-spacing: 0.08em; }
 
 /* ---------- pages ---------- */
 .bookfont { font-size: var(--fs); }
@@ -70,8 +67,8 @@ body {
   overflow: hidden;
   font-family: var(--body);
 }
-.page.left  { background-image: linear-gradient(to left, rgba(90, 60, 25, 0.22), rgba(90, 60, 25, 0) 10%), linear-gradient(to right, rgba(90,60,25,0.07), rgba(90,60,25,0) 3%), var(--grain); }
-.page.right { background-image: linear-gradient(to right, rgba(90, 60, 25, 0.22), rgba(90, 60, 25, 0) 10%), linear-gradient(to left, rgba(90,60,25,0.07), rgba(90,60,25,0) 3%), var(--grain); }
+.page.left  { background-image: linear-gradient(to left, rgba(70, 50, 25, 0.2), rgba(70, 50, 25, 0) 10%), var(--grain); }
+.page.right { background-image: linear-gradient(to right, rgba(70, 50, 25, 0.2), rgba(70, 50, 25, 0) 10%), var(--grain); }
 .page-inner {
   height: 100%;
   display: flex;
@@ -83,59 +80,66 @@ body {
   justify-content: space-between;
   align-items: baseline;
   gap: 1em;
-  min-height: 1.7em;
-  padding-bottom: 0.35em;
+  min-height: 1.8em;
+  padding-bottom: 0.4em;
   margin-bottom: 1em;
-  border-bottom: 1px solid rgba(138, 61, 75, 0.28);
-  font: italic 400 0.8em/1.3 var(--display);
-  letter-spacing: 0.03em;
-  color: rgba(42, 40, 56, 0.6);
+  border-bottom: 1.5px dashed rgba(43, 45, 66, 0.3);
+  font: 400 0.72em/1.3 var(--type);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faded);
 }
-.page-head .ur { font: 400 1.15em/1 var(--calli); font-style: normal; color: var(--rose); }
-.page-head .ht { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.page-head .dv { font: 400 1.3em/1 var(--deva); letter-spacing: 0; text-transform: none; color: var(--stamp); }
+.page-head .ht { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: none; }
 .page-body {
   --lh: 1.75em;
   flex: 1;
   min-height: 0;
   overflow: hidden;
   line-height: var(--lh);
-  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--lh) - 1px), rgba(64, 86, 128, 0.13) calc(var(--lh) - 1px), rgba(64, 86, 128, 0.13) var(--lh));
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--lh) - 1px), rgba(43, 45, 66, 0.09) calc(var(--lh) - 1px), rgba(43, 45, 66, 0.09) var(--lh));
   background-position: 0 0.05em;
 }
-.page-body.rtl { --lh: 2.5em; direction: rtl; font-family: var(--urdu); font-size: 0.95em; }
+.page-body.hi { --lh: 1.95em; font-family: var(--deva); font-size: 0.97em; }
+.page-body.rtl { --lh: 2.5em; direction: rtl; font-family: var(--urdu); font-size: 0.92em; }
 .page-foot {
   padding-top: 0.6em;
   display: flex;
   justify-content: center;
   gap: 0.6em;
   align-items: baseline;
-  font: 500 0.8em/1 var(--display);
-  color: rgba(42, 40, 56, 0.55);
-  font-variant-numeric: oldstyle-nums;
+  font: 400 0.74em/1 var(--type);
+  color: var(--faded);
   min-height: 1.4em;
 }
-.page-foot .ur { font-family: var(--calli); font-size: 1.1em; }
+.page-foot .dv { font-family: var(--deva); font-size: 1.15em; }
 
 /* entry header */
-.entry-head { margin-bottom: var(--lh); }
-.entry-kind {
-  font: 600 0.7em/1.6 var(--display);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--rose);
-  direction: ltr;
-  text-align: left;
+.entry-head { margin-bottom: var(--lh); direction: ltr; }
+.rtl .entry-head { direction: rtl; }
+.entry-meta { display: flex; align-items: center; gap: 0.9em; flex-wrap: wrap; font-family: var(--type); }
+.stamp-date {
+  display: inline-block;
+  padding: 0.38em 0.6em 0.3em;
+  border: 2px solid var(--stamp);
+  border-radius: 3px;
+  color: var(--stamp);
+  font: 400 0.72em/1 var(--type);
+  letter-spacing: 0.14em;
+  transform: rotate(-2.5deg);
+  opacity: 0.9;
 }
-.rtl .entry-kind { text-align: right; }
+.entry-kind { font: 400 0.72em/1 var(--type); letter-spacing: 0.16em; text-transform: uppercase; color: var(--faded); }
 .entry-title {
-  margin: 0.15em 0 0.05em;
-  font: italic 500 1.95em/1.15 var(--display);
+  margin: 0.45em 0 0.1em;
+  font: 400 1.85em/1.25 var(--display);
   color: var(--ink);
   text-wrap: balance;
 }
-.rtl .entry-title { font: 400 1.75em/1.9 var(--calli); }
-.divider { display: block; width: 7.5em; height: 0.8em; margin-top: 0.45em; color: var(--rose); opacity: 0.75; }
-.rtl .divider { margin-right: 0; margin-left: auto; }
+.hi .entry-title { font-size: 1.9em; }
+.rtl .entry-title { font: 400 1.7em/1.9 var(--urdu); }
+.route-rule { display: block; width: 9em; height: 0.85em; margin-top: 0.4em; color: var(--stamp); opacity: 0.8; }
+.rtl .route-rule { margin-left: auto; transform: scaleX(-1); }
 
 /* poems */
 .stanza { margin: 0 0 var(--lh); }
@@ -147,26 +151,29 @@ body {
 .prose p.split { text-align-last: justify; }
 .prose p.dropcap::first-letter {
   float: left;
-  font: 500 3.55em/0.82 var(--display);
-  padding: 0.07em 0.09em 0 0;
-  color: var(--rose);
+  font: 400 3.4em/0.85 var(--display);
+  padding: 0.06em 0.1em 0 0;
+  color: var(--stamp);
 }
 .rtl.prose p { text-indent: 0; }
 /* thoughts */
-.thought p { margin: 0 0 var(--lh); font: italic 400 1.14em/var(--lh) var(--display); }
-.thought .qmark { display: block; height: var(--lh); font: 500 3em/1 var(--display); color: var(--rose); opacity: 0.6; }
+.thought p { margin: 0 0 var(--lh); font: italic 400 1.12em/var(--lh) var(--body); }
+.hi.thought p { font: 400 1.05em/var(--lh) var(--deva); }
 .rtl.thought p { font: 400 1em/var(--lh) var(--urdu); }
-.end-orn { display: block; margin: 0.2em auto 0; width: 1.4em; height: 1.4em; color: var(--rose); opacity: 0.6; }
+.thought .qmark { display: block; height: var(--lh); font: 400 3em/1 var(--display); color: var(--stamp); opacity: 0.55; }
+.end-orn { display: block; margin: 0.3em auto 0; width: 1.3em; height: 1.3em; color: var(--stamp); opacity: 0.7; }
 
-/* contents */
-.toc-head { text-align: center; margin-bottom: 0.6em; }
-.toc-head .ur { display: block; font: 400 2.2em/1.7 var(--calli); color: var(--rose); }
-.toc-head .en { display: block; font: 600 0.72em/1.4 var(--display); letter-spacing: 0.28em; text-transform: uppercase; color: rgba(42,40,56,0.6); }
+/* contents: a timetable of stops */
+.toc-head { text-align: center; margin-bottom: 0.8em; }
+.toc-head .dv { display: block; font: 400 2.4em/1.4 var(--display); color: var(--stamp); }
+.toc-head .en { display: block; font: 400 0.7em/1.4 var(--type); letter-spacing: 0.26em; text-transform: uppercase; color: var(--faded); }
+.toc-cols { display: flex; gap: 0.6em; padding-bottom: 0.3em; border-bottom: 1.5px dashed rgba(43,45,66,0.3); font: 400 0.62em/1.4 var(--type); letter-spacing: 0.14em; color: var(--faded); }
+.toc-cols .c1 { flex: 0 0 3.4em; } .toc-cols .c2 { flex: 1; } .toc-cols .c3 { flex: 0 0 auto; }
 .toc-list { display: flex; flex-direction: column; }
 .toc-row {
   display: flex;
   align-items: baseline;
-  gap: 0.5em;
+  gap: 0.55em;
   width: 100%;
   min-height: var(--lh);
   padding: 0;
@@ -179,63 +186,70 @@ body {
   border-radius: 2px;
 }
 .toc-row > * { pointer-events: none; }
-.toc-row:hover .toc-title { color: var(--rose); }
-.toc-row:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
-.toc-kind { flex: 0 0 3.4em; font: 400 0.95em/1 var(--calli); color: var(--rose); text-align: right; }
-.toc-title { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
-.toc-title[dir="rtl"] { font-family: var(--calli); font-size: 0.95em; font-style: normal; }
-.toc-dots { flex: 1; border-bottom: 1px dotted rgba(42,40,56,0.4); transform: translateY(-0.3em); min-width: 1em; }
-.toc-num { font: 500 1em/1 var(--display); font-variant-numeric: tabular-nums oldstyle-nums; min-width: 1.4em; text-align: right; }
-.toc-empty { font-style: italic; color: rgba(42,40,56,0.55); text-align: center; margin-top: 2em; }
+.toc-row:hover .toc-title { color: var(--stamp); }
+.toc-row:focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
+.toc-stop { flex: 0 0 2em; font: 400 0.8em/1 var(--type); color: var(--faded); }
+.toc-kind { flex: 0 0 3em; font: 400 0.92em/1 var(--deva); color: var(--stamp); }
+.toc-title { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 62%; }
+.toc-title[lang="hi"] { font-family: var(--deva); font-style: normal; font-size: 0.95em; }
+.toc-title[lang="ur"] { font-family: var(--urdu); font-style: normal; font-size: 0.85em; }
+.toc-dots { flex: 1; border-bottom: 1px dotted rgba(43,45,66,0.4); transform: translateY(-0.3em); min-width: 1em; }
+.toc-num { font: 400 0.9em/1 var(--type); min-width: 1.6em; text-align: right; }
+.toc-empty { font-style: italic; color: var(--faded); text-align: center; margin-top: 2em; }
 
-/* title page, unwritten page */
-.center-page { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10%; gap: 0.4em; }
-.tp-ur { font: 400 3.1em/1.8 var(--calli); color: var(--ink); }
-.tp-en { font: 600 0.75em/1.4 var(--display); letter-spacing: 0.34em; text-transform: uppercase; color: var(--rose); }
-.tp-couplet { margin-top: 2.2em; direction: rtl; font: 400 0.98em/2.6 var(--urdu); color: var(--ink); }
-.tp-trans { max-width: 22em; font: italic 400 0.92em/1.5 var(--display); color: rgba(42,40,56,0.75); text-wrap: balance; }
-.tp-by { font: 500 0.75em/1.4 var(--display); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(42,40,56,0.55); }
-.unwritten .ur { font: 400 1.6em/2 var(--calli); color: rgba(42,40,56,0.32); }
-.unwritten .en { font: italic 400 0.95em/1.4 var(--display); color: rgba(42,40,56,0.4); }
+/* title page and the road ahead */
+.center-page { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10%; gap: 0.3em; }
+.tt-hi { font: 400 4.6em/1.2 var(--display); color: var(--stamp); }
+.tt-en { font: 400 1em/1.4 var(--type); letter-spacing: 0.45em; padding-left: 0.45em; }
+.tt-tag { margin-top: 1.2em; font: italic 400 1.35em/1.3 var(--body); }
+.tt-tagh { font: 400 1.05em/1.6 var(--deva); color: var(--faded); }
+.tt-fields { margin-top: 2em; width: 100%; max-width: 18em; padding-top: 1em; border-top: 1.5px dashed rgba(43,45,66,0.35); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9em 1em; text-align: left; font-family: var(--type); }
+.field { display: flex; flex-direction: column; gap: 0.2em; }
+.field .k { font-size: 0.62em; letter-spacing: 0.12em; color: var(--faded); }
+.field .v { font-size: 0.95em; }
+.unwritten .dv { font: 400 1.7em/1.6 var(--display); color: rgba(43,45,66,0.3); }
+.unwritten .en { font: 400 0.8em/1.4 var(--type); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(43,45,66,0.38); }
 
-/* covers and endpapers */
-.cover {
-  background-color: var(--lapis);
-  background-image: radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.06), rgba(0,0,0,0.25) 80%), var(--grain);
-  color: var(--gold);
+/* the ticket: front and back covers */
+.cover { position: relative; font-family: var(--type); color: var(--ink); }
+.notches { position: absolute; top: 3%; bottom: 3%; display: flex; flex-direction: column; justify-content: space-between; z-index: 1; }
+.notches.l { left: -0.45em; } .notches.r { right: -0.45em; }
+.notches span { display: block; width: 0.9em; height: 0.9em; border-radius: 50%; background: var(--slate); }
+.cv { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 8% 11% 9%; }
+.cv-top { display: flex; justify-content: space-between; gap: 1em; padding-bottom: 1em; border-bottom: 2px dashed rgba(43,45,66,0.45); font-size: 0.74em; letter-spacing: 0.12em; }
+.cv-top .dv, .field .dv { font-family: var(--deva); letter-spacing: 0; }
+.cv-hi { margin-top: 0.35em; font: 400 5.4em/1.2 var(--display); color: var(--stamp); }
+.cv-en { font-size: 1.1em; letter-spacing: 0.45em; }
+.cv-fields { margin-top: 1.6em; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1em 1.2em; }
+.cv-fields .wide { grid-column: span 2; }
+.cv-stampbox { margin-top: auto; display: flex; justify-content: flex-end; }
+.cv-stamp {
+  width: 8.6em; height: 8.6em; border-radius: 50%;
+  border: 3px solid var(--stamp); color: var(--stamp);
+  box-shadow: inset 0 0 0 0.35em var(--paper), inset 0 0 0 0.47em var(--stamp);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.15em;
+  transform: rotate(-14deg); opacity: 0.86; text-align: center;
 }
-.cover-frame {
-  position: absolute;
-  inset: 5.5%;
-  border: 1.5px solid var(--gold);
-  box-shadow: inset 0 0 0 5px var(--lapis), inset 0 0 0 6.5px rgba(201, 165, 94, 0.7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 0.2em;
-  padding: 8%;
-}
-.cover-corner { position: absolute; width: 2.4em; height: 2.4em; color: var(--gold); opacity: 0.9; }
-.cover-corner.tl { top: 0.7em; left: 0.7em; } .cover-corner.tr { top: 0.7em; right: 0.7em; }
-.cover-corner.bl { bottom: 0.7em; left: 0.7em; } .cover-corner.br { bottom: 0.7em; right: 0.7em; }
-.shamsa { width: 38%; max-width: 11em; color: var(--gold); margin-bottom: 0.6em; filter: drop-shadow(0 1px 0 rgba(0,0,0,0.4)); }
-.cover-ur { font: 400 3.4em/1.7 var(--calli); text-shadow: 0 1px 0 rgba(0,0,0,0.45), 0 -1px 0 rgba(255,230,170,0.15); }
-.cover-en { font: 600 0.8em/1.4 var(--display); letter-spacing: 0.42em; text-transform: uppercase; padding-left: 0.42em; }
-.cover-sub { margin-top: 0.4em; font: italic 400 1em/1.4 var(--display); color: rgba(201, 165, 94, 0.8); }
-.cover-author { margin-top: 2.2em; font: 500 0.78em/1.4 var(--display); letter-spacing: 0.22em; text-transform: uppercase; color: rgba(201, 165, 94, 0.85); }
-.endpaper { background-color: #3a2a3a; background-image: var(--endpaper); }
+.cv-stamp .a { font-size: 0.95em; letter-spacing: 0.1em; }
+.cv-stamp .b { font: 400 0.8em/1.3 var(--display); }
+.back .cv { align-items: center; justify-content: center; gap: 1.1em; text-align: center; }
+.barcode { width: 11em; height: 3.6em; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 9px, var(--ink) 9px 12px, transparent 12px 14px); opacity: 0.85; }
+.back .k1 { font: 400 1.15em/1.6 var(--deva); }
+.back .k2 { font-size: 0.78em; letter-spacing: 0.1em; color: var(--faded); max-width: 18em; }
+
+/* endpapers: a route map */
+.page.endpaper, .page.endpaper.left, .page.endpaper.right { background-color: var(--slate); background-image: var(--routes); }
 .endpaper .plate {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: 62%; padding: 1.4em 1em;
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-2deg);
+  width: 64%; padding: 1.3em 1.1em;
   background: var(--paper); background-image: var(--grain);
-  border: 1px solid rgba(138,61,75,0.4);
-  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px rgba(138,61,75,0.4);
+  border-radius: 4px;
+  box-shadow: 0 0.8em 1.6em rgba(0,0,0,0.35);
   text-align: center; color: var(--ink);
+  font-family: var(--type);
 }
-.plate .ur { display: block; font: 400 1.4em/1.9 var(--calli); color: var(--rose); }
-.plate .en { display: block; font: italic 400 0.9em/1.4 var(--display); }
+.plate .dv { display: block; font: 400 1.45em/1.5 var(--display); color: var(--stamp); }
+.plate .en { display: block; margin-top: 0.4em; padding-top: 0.6em; border-top: 1.5px dashed rgba(43,45,66,0.4); font-size: 0.8em; letter-spacing: 0.12em; }
 
 /* ---------- controls ---------- */
 #controls {
@@ -244,34 +258,34 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px 10px;
-  font: 500 0.95rem/1 var(--display);
-  color: rgba(241, 230, 207, 0.78);
+  font: 400 0.86rem/1 var(--type);
+  color: rgba(242, 230, 204, 0.8);
 }
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
+  gap: 0.5em;
   min-height: 36px;
-  padding: 0 0.9em;
-  border: 1px solid rgba(201, 165, 94, 0.28);
+  padding: 0 0.95em;
+  border: 1px solid rgba(242, 230, 204, 0.25);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.03);
   color: inherit;
   font: inherit;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.btn:hover { background: rgba(201, 165, 94, 0.1); border-color: rgba(201, 165, 94, 0.55); color: var(--paper); }
-.btn:focus-visible, #vol:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.btn:hover { background: rgba(242, 230, 204, 0.09); border-color: rgba(242, 230, 204, 0.5); color: var(--paper); }
+.btn:focus-visible, #vol:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 .btn svg { width: 1.05em; height: 1.05em; }
 .btn.icon { padding: 0; width: 36px; justify-content: center; }
-.btn[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); background: rgba(201, 165, 94, 0.1); }
-#pageinfo { min-width: 7.5em; text-align: center; font-variant-numeric: tabular-nums; color: rgba(241, 230, 207, 0.55); font-style: italic; }
+.btn[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); background: rgba(226, 196, 138, 0.1); }
+#pageinfo { min-width: 8em; text-align: center; color: rgba(242, 230, 204, 0.55); }
 .music { display: inline-flex; align-items: center; gap: 8px; }
-#vol { width: 78px; accent-color: var(--gold); }
+#vol { width: 78px; accent-color: var(--brass); }
 #vol[hidden] { display: none; }
-.sep { width: 1px; height: 20px; background: rgba(201, 165, 94, 0.2); }
+.sep { width: 1px; height: 20px; background: rgba(242, 230, 204, 0.2); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* measuring room, never seen */
@@ -283,7 +297,7 @@ body {
 #stage.nolib .page { position: relative; flex: 0 0 auto; }
 
 @media (max-width: 520px) {
-  #controls { font-size: 0.88rem; gap: 6px; }
+  #controls { font-size: 0.8rem; gap: 6px; }
   .label-long, .sep { display: none; }
   #vol { width: 60px; }
 }
@@ -294,7 +308,7 @@ body {
 </head>
 <body>
 <div id="app">
-  <div id="stage" aria-live="polite"><p id="loading">Opening the diary…</p></div>
+  <div id="stage" aria-live="polite"><p id="loading">Boarding…</p></div>
   <nav id="controls" aria-label="Diary controls" hidden>
     <button class="btn icon" id="prev" type="button" aria-label="Previous page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
@@ -331,12 +345,13 @@ body {
 
   /* ---------------- small helpers ---------------- */
   const KINDS = {
-    poem:    { en: "Poem",    ur: "نظم" },
-    thought: { en: "Thought", ur: "خیال" },
-    story:   { en: "Story",   ur: "کہانی" }
+    poem:    { en: "Poem",    hi: "कविता" },
+    thought: { en: "Thought", hi: "ख़याल" },
+    story:   { en: "Story",   hi: "कहानी" }
   };
-  const UR_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
-  const toUrdu = n => String(n).replace(/\d/g, d => UR_DIGITS[d]);
+  const DV_DIGITS = "०१२३४५६७८९";
+  const toDeva = n => String(n).replace(/\d/g, d => DV_DIGITS[d]);
+  const pad2 = n => String(n).padStart(2, "0");
   const reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function h(tag, attrs, ...kids) {
@@ -353,47 +368,25 @@ body {
     }
     return el;
   }
-  function fmtDate(iso, lang) {
+  function stampDate(iso) {
     const d = new Date(iso + "T12:00:00");
     if (isNaN(d)) return iso || "";
     try {
-      return d.toLocaleDateString(lang === "ur" ? "ur-PK" : "en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+      return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
     } catch (e) { return iso; }
   }
+  function longDate(iso) {
+    const d = new Date(iso + "T12:00:00");
+    if (isNaN(d)) return iso || "";
+    try { return d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" }); }
+    catch (e) { return iso; }
+  }
 
-  /* ---------------- ornaments (Persianate geometry) ---------------- */
-  function starPoints(cx, cy, r, inner) {
-    const pts = [];
-    for (let i = 0; i < 16; i++) {
-      const a = (Math.PI / 8) * i - Math.PI / 2;
-      const rr = i % 2 === 0 ? r : r * inner;
-      pts.push((cx + rr * Math.cos(a)).toFixed(2) + "," + (cy + rr * Math.sin(a)).toFixed(2));
-    }
-    return pts.join(" ");
-  }
-  const dividerSVG = () =>
-    `<svg class="divider" viewBox="0 0 120 12" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="0.8"><line x1="0" y1="6" x2="48" y2="6"/><line x1="72" y1="6" x2="120" y2="6"/></g><polygon points="${starPoints(60, 6, 5.6, 0.72)}" fill="currentColor"/><circle cx="51" cy="6" r="1" fill="currentColor"/><circle cx="69" cy="6" r="1" fill="currentColor"/></svg>`;
-  const endOrnSVG = () =>
-    `<svg class="end-orn" viewBox="0 0 24 24" aria-hidden="true"><polygon points="${starPoints(12, 12, 10, 0.72)}" fill="none" stroke="currentColor" stroke-width="1"/><polygon points="${starPoints(12, 12, 4.5, 0.72)}" fill="currentColor"/></svg>`;
-  function shamsaSVG() {
-    let petals = "";
-    for (let i = 0; i < 16; i++) {
-      petals += `<ellipse cx="50" cy="20" rx="5.2" ry="13" transform="rotate(${i * 22.5} 50 50)"/>`;
-    }
-    let dots = "";
-    for (let i = 0; i < 32; i++) {
-      const a = (Math.PI / 16) * i;
-      dots += `<circle cx="${(50 + 46 * Math.cos(a)).toFixed(2)}" cy="${(50 + 46 * Math.sin(a)).toFixed(2)}" r="0.9"/>`;
-    }
-    return `<svg class="shamsa" viewBox="0 0 100 100" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="0.7">${petals}<circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="22"/></g>
-      <g fill="currentColor">${dots}</g>
-      <polygon points="${starPoints(50, 50, 19, 0.72)}" fill="none" stroke="currentColor" stroke-width="0.9"/>
-      <polygon points="${starPoints(50, 50, 9, 0.72)}" fill="currentColor"/>
-    </svg>`;
-  }
-  const cornerSVG = rot =>
-    `<svg viewBox="0 0 40 40" style="transform:rotate(${rot}deg)" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M2 38 V2 H38"/><path d="M7 33 V7 H33"/><path d="M7 7 Q20 10 22 22 Q10 20 7 7z"/></g><circle cx="14" cy="14" r="1.6" fill="currentColor"/></svg>`;
+  /* ---------------- ornaments: routes and stations ---------------- */
+  const routeRule = () =>
+    `<svg class="route-rule" viewBox="0 0 140 12" aria-hidden="true"><line x1="7" y1="6" x2="133" y2="6" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 4"/><circle cx="7" cy="6" r="3.4" fill="currentColor"/><circle cx="70" cy="6" r="2.6" fill="#f2e6cc" stroke="currentColor" stroke-width="1.3"/><circle cx="133" cy="6" r="3.6" fill="#f2e6cc" stroke="currentColor" stroke-width="1.5"/></svg>`;
+  const endOrn = () =>
+    `<svg class="end-orn" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg>`;
 
   function makeTextures() {
     try {
@@ -402,13 +395,12 @@ body {
       const g = c.getContext("2d");
       const img = g.createImageData(220, 220);
       for (let i = 0; i < img.data.length; i += 4) {
-        const v = 120 + Math.random() * 80;
-        img.data[i] = v; img.data[i + 1] = v * 0.92; img.data[i + 2] = v * 0.78;
-        img.data[i + 3] = Math.random() * 22;
+        const v = 110 + Math.random() * 90;
+        img.data[i] = v; img.data[i + 1] = v * 0.93; img.data[i + 2] = v * 0.8;
+        img.data[i + 3] = Math.random() * 20;
       }
       g.putImageData(img, 0, 0);
-      // a few soft fibres
-      g.strokeStyle = "rgba(120, 90, 50, 0.05)";
+      g.strokeStyle = "rgba(110, 85, 50, 0.05)";
       for (let i = 0; i < 40; i++) {
         g.beginPath();
         const x = Math.random() * 220, y = Math.random() * 220;
@@ -418,17 +410,18 @@ body {
       }
       document.documentElement.style.setProperty("--grain", `url(${c.toDataURL()})`);
     } catch (e) { /* plain paper is fine */ }
-    const tile = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44"><rect width="44" height="44" fill="#3a2a3a"/><polygon points="${starPoints(22, 22, 9, 0.72)}" fill="none" stroke="#c9a55e" stroke-opacity="0.55" stroke-width="0.8"/><polygon points="${starPoints(0, 0, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(44, 0, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(0, 44, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/><polygon points="${starPoints(44, 44, 4, 0.72)}" fill="#c9a55e" fill-opacity="0.35"/></svg>`;
-    document.documentElement.style.setProperty("--endpaper", `url("data:image/svg+xml,${encodeURIComponent(tile)}")`);
+    const tile = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180"><rect width="180" height="180" fill="#2b2d42"/><g fill="none" stroke="#f2e6cc" stroke-opacity="0.22" stroke-width="1.4" stroke-dasharray="5 6"><path d="M-10 40 C 40 20, 70 80, 120 60 S 170 20, 190 40"/><path d="M-10 130 C 30 150, 80 100, 110 130 S 160 170, 190 140"/><path d="M60 -10 C 50 40, 90 70, 80 110 S 60 160, 70 190"/></g><g fill="#2b2d42" stroke="#f2e6cc" stroke-opacity="0.4" stroke-width="1.4"><circle cx="120" cy="60" r="4"/><circle cx="110" cy="130" r="4"/><circle cx="80" cy="110" r="3"/><circle cx="30" cy="35" r="3"/></g><circle cx="120" cy="60" r="1.5" fill="#b23a3a" fill-opacity="0.8"/></svg>`;
+    document.documentElement.style.setProperty("--routes", `url("data:image/svg+xml,${encodeURIComponent(tile)}")`);
   }
 
   /* ---------------- page factory ---------------- */
   function blankPage(cls) {
     return h("div", { class: "page " + (cls || "") });
   }
-  function ruledPage(rtl) {
+  function langClass(lang) { return lang === "ur" ? " rtl" : lang === "hi" ? " hi" : ""; }
+  function ruledPage(lang) {
     const head = h("div", { class: "page-head" });
-    const body = h("div", { class: "page-body" + (rtl ? " rtl" : "") });
+    const body = h("div", { class: "page-body" + langClass(lang) });
     const foot = h("div", { class: "page-foot" });
     const inner = h("div", { class: "page-inner" }, head, body, foot);
     const page = h("div", { class: "page ruled" }, inner);
@@ -455,7 +448,6 @@ body {
       lines.slice(k).forEach(l => tail.appendChild(l));
       return [head, tail];
     }
-    // prose paragraph: binary search on words
     const words = block.textContent.split(/\s+/).filter(Boolean);
     const head = block.cloneNode(false);
     body.appendChild(head);
@@ -485,32 +477,33 @@ body {
     return chunks.map((ch, i) => {
       const cls = [];
       if (i === 0) cls.push("first");
-      if (i === 0 && post.type === "story" && post.lang !== "ur") cls.push("dropcap");
+      if (i === 0 && post.type === "story" && (post.lang || "en") === "en") cls.push("dropcap");
       return h("p", { class: cls.join(" ") || null }, ch.replace(/\s*\n\s*/g, " "));
     });
   }
-
   function bodyClass(post) {
     return post.type === "poem" ? "poem" : post.type === "thought" ? "thought" : "prose";
   }
 
-  function paginateEntry(post, measure) {
-    const rtl = post.lang === "ur";
+  function paginateEntry(post, stop, measure) {
+    const lang = post.lang || "en";
     const kind = KINDS[post.type] || KINDS.thought;
     const pages = [];
     const newPage = first => {
-      const p = ruledPage(rtl);
+      const p = ruledPage(lang);
       p.body.classList.add(bodyClass(post));
       if (first) {
-        p.head.append(h("span", { class: "ht" }, fmtDate(post.date, "en")), h("span", { class: "ur" }, kind.ur));
+        p.head.append(h("span", null, `Stop ${pad2(stop)} · `, h("span", { class: "dv" }, "पड़ाव " + toDeva(stop))), h("span", { class: "dv" }, kind.hi));
         const eh = h("div", { class: "entry-head" },
-          h("div", { class: "entry-kind" }, kind.en + (post.sample ? " · sample entry" : "")),
-          h("h2", { class: "entry-title", dir: "auto" }, post.title || "Untitled"));
-        eh.insertAdjacentHTML("beforeend", dividerSVG());
+          h("div", { class: "entry-meta" },
+            h("span", { class: "stamp-date", title: longDate(post.date) }, stampDate(post.date)),
+            h("span", { class: "entry-kind" }, kind.en + (post.sample ? " · sample" : ""))),
+          h("h2", { class: "entry-title", lang: lang, dir: "auto" }, post.title || "Untitled"));
+        eh.insertAdjacentHTML("beforeend", routeRule());
         p.body.appendChild(eh);
-        if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, rtl ? "”" : "“"));
+        if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, lang === "ur" ? "”" : "“"));
       } else {
-        p.head.append(h("span", { class: "ht", dir: "auto" }, post.title || "Untitled"), h("span", null, "continued"));
+        p.head.append(h("span", { class: "ht", dir: "auto" }, post.title || "Untitled"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
       }
       p.count = 0;
       measure.appendChild(p.page);
@@ -526,13 +519,13 @@ body {
         pg.body.removeChild(b);
         const [head, tail] = splitBlock(b, pg.body);
         if (head) { pg.body.appendChild(head); pg.count++; b = tail; }
-        else if (pg.count === 0 && pg.fresh) { pg.body.appendChild(b); pg.count++; break; } // taller than any page
+        else if (pg.count === 0 && pg.fresh) { pg.body.appendChild(b); pg.count++; break; }
         if (!b) break;
         pg = newPage(false);
         pg.fresh = true;
       }
     }
-    const orn = h("div", { html: endOrnSVG() });
+    const orn = h("div", { html: endOrn() });
     pg.body.appendChild(orn);
     if (overflows(pg.body)) orn.remove();
     return pages;
@@ -541,13 +534,13 @@ body {
   function buildContents(posts, measure, starts) {
     const pages = [];
     const newPage = first => {
-      const p = ruledPage(false);
-      p.page.classList.add("toc-page");
+      const p = ruledPage("en");
       if (first) {
-        p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "ur" }, "فہرست"), h("span", { class: "en" }, "Contents")));
+        p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "dv", lang: "hi" }, "पड़ाव"), h("span", { class: "en" }, "Stops along the way")));
       } else {
-        p.head.append(h("span", null, "Contents"), h("span", null, "continued"));
+        p.head.append(h("span", null, "Stops along the way"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
       }
+      p.body.appendChild(h("div", { class: "toc-cols", "aria-hidden": "true" }, h("span", { class: "c1" }, "STOP"), h("span", { class: "c2" }, "ENTRY"), h("span", { class: "c3" }, "PAGE")));
       p.list = h("div", { class: "toc-list" });
       p.body.appendChild(p.list);
       measure.appendChild(p.page);
@@ -555,13 +548,14 @@ body {
       return p;
     };
     let pg = newPage(true);
-    if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, "The first entry is still waiting to be written."));
+    if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, "The first stop is still ahead."));
     posts.forEach((post, i) => {
       const kind = KINDS[post.type] || KINDS.thought;
       const num = starts ? starts[i] : 88;
-      const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
-        h("span", { class: "toc-kind" }, kind.ur),
-        h("span", { class: "toc-title", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
+      const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `Stop ${i + 1}: ${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
+        h("span", { class: "toc-stop" }, pad2(i + 1)),
+        h("span", { class: "toc-kind" }, kind.hi),
+        h("span", { class: "toc-title", lang: post.lang || "en", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
         h("span", { class: "toc-dots" }),
         h("span", { class: "toc-num" }, String(num)));
       pg.list.appendChild(row);
@@ -574,50 +568,64 @@ body {
     return pages;
   }
 
+  function notches() {
+    const col = side => h("div", { class: "notches " + side, "aria-hidden": "true" }, Array.from({ length: 15 }, () => h("span")));
+    return [col("l"), col("r")];
+  }
+  const field = (k, v, cls) => h("div", { class: "field" + (cls ? " " + cls : "") }, h("span", { class: "k" }, ...k), h("span", { class: "v" }, v));
+  const dv = t => h("span", { class: "dv", lang: "hi" }, t);
+
   function coverPage(d) {
     const p = blankPage("cover");
-    const frame = h("div", { class: "cover-frame" });
-    ["tl", "tr", "br", "bl"].forEach((c, i) => frame.appendChild(h("div", { class: "cover-corner " + c, html: cornerSVG(i * 90) })));
-    frame.insertAdjacentHTML("beforeend", shamsaSVG());
-    frame.append(
-      h("div", { class: "cover-ur", lang: "ur" }, d.title_ur || "روزنامچہ"),
-      h("div", { class: "cover-en" }, d.title_en || "Roznamcha"),
-      h("div", { class: "cover-sub" }, d.subtitle || ""),
-      h("div", { class: "cover-author" }, d.author || ""));
-    p.appendChild(frame);
+    p.append(...notches());
+    p.appendChild(h("div", { class: "cv" },
+      h("div", { class: "cv-top" }, h("span", null, "ONE WAY · ", dv("एक तरफ़ा")), h("span", null, d.ticket_no || "No. 000001")),
+      h("div", { class: "cv-hi", lang: "hi" }, d.title_hi || "राही"),
+      h("div", { class: "cv-en" }, (d.title_en || "Raahi").toUpperCase()),
+      h("div", { class: "cv-fields" },
+        field(["PASSENGER · ", dv("यात्री")], (d.author || "").toUpperCase()),
+        field(["CLASS"], "WINDOW SEAT"),
+        field(["FROM · ", dv("से")], "HERE"),
+        field(["TO · ", dv("तक")], "— — —"),
+        field(["CARRYING"], d.subtitle || "poems · thoughts · stories", "wide")),
+      h("div", { class: "cv-stampbox" },
+        h("div", { class: "cv-stamp" },
+          h("span", { class: "a" }, "NOT THERE"), h("span", { class: "a" }, "YET"),
+          h("span", { class: "b", lang: "hi" }, d.tagline_hi || "मंज़िल अभी दूर है")))));
     p.setAttribute("data-density", "hard");
     return p;
   }
-  function backCover() {
-    const p = blankPage("cover");
-    const frame = h("div", { class: "cover-frame" });
-    ["tl", "tr", "br", "bl"].forEach((c, i) => frame.appendChild(h("div", { class: "cover-corner " + c, html: cornerSVG(i * 90) })));
-    frame.insertAdjacentHTML("beforeend", `<svg viewBox="0 0 24 24" style="width:2.2em;height:2.2em;color:var(--gold)" aria-hidden="true"><polygon points="${starPoints(12, 12, 10, 0.72)}" fill="none" stroke="currentColor" stroke-width="0.9"/><polygon points="${starPoints(12, 12, 4.5, 0.72)}" fill="currentColor"/></svg>`);
-    p.appendChild(frame);
+  function backCover(d) {
+    const p = blankPage("cover back");
+    p.append(...notches());
+    p.appendChild(h("div", { class: "cv" },
+      h("div", { class: "barcode", "aria-hidden": "true" }),
+      h("div", null, d.ticket_no || "No. 000001"),
+      h("div", { class: "k1", lang: "hi" }, "यात्रा पूरी होने तक टिकट संभाल कर रखें"),
+      h("div", { class: "k2" }, "Keep this ticket until the journey ends.")));
     p.setAttribute("data-density", "hard");
     return p;
   }
-  function endpaper(ur, en) {
+  function endpaper(hiText, enText) {
     const p = blankPage("endpaper");
-    p.appendChild(h("div", { class: "plate" }, h("span", { class: "ur", lang: "ur" }, ur), h("span", { class: "en" }, en)));
+    p.appendChild(h("div", { class: "plate" }, h("span", { class: "dv", lang: "hi" }, hiText), h("span", { class: "en" }, enText)));
     return p;
   }
   function titlePage(d) {
     const p = blankPage("titlepage");
-    const c = h("div", { class: "center-page" },
-      h("div", { class: "tp-ur", lang: "ur" }, d.title_ur || "روزنامچہ"),
-      h("div", { class: "tp-en" }, d.title_en || "Roznamcha"));
-    if (d.epigraph_ur && d.epigraph_ur.length) {
-      c.appendChild(h("div", { class: "tp-couplet", lang: "ur" }, d.epigraph_ur.map(l => h("div", null, l))));
-      if (d.epigraph_en) c.appendChild(h("div", { class: "tp-trans" }, d.epigraph_en));
-      if (d.epigraph_by) c.appendChild(h("div", { class: "tp-by" }, d.epigraph_by));
-    }
-    p.appendChild(c);
+    p.appendChild(h("div", { class: "center-page" },
+      h("div", { class: "tt-hi", lang: "hi" }, d.title_hi || "राही"),
+      h("div", { class: "tt-en" }, (d.title_en || "Raahi").toUpperCase()),
+      h("div", { class: "tt-tag" }, d.tagline || "not there yet"),
+      h("div", { class: "tt-tagh", lang: "hi" }, d.tagline_hi || "मंज़िल अभी दूर है"),
+      h("div", { class: "tt-fields" },
+        field(["PASSENGER · ", dv("यात्री")], d.author || ""),
+        field(["DESTINATION · ", dv("मंज़िल")], "unknown"))));
     return p;
   }
   function unwrittenPage() {
     const p = blankPage("unwritten");
-    p.appendChild(h("div", { class: "center-page" }, h("div", { class: "ur", lang: "ur" }, "ابھی لکھا جانا ہے"), h("div", { class: "en" }, "pages still to be written")));
+    p.appendChild(h("div", { class: "center-page" }, h("div", { class: "dv", lang: "hi" }, "आगे का रास्ता"), h("div", { class: "en" }, "the road ahead")));
     return p;
   }
 
@@ -651,13 +659,7 @@ body {
     const posts = (data.posts || []).slice();
     const d = data.diary || {};
 
-    // 1. entries
-    const entryPages = posts.map(post => {
-      const pgs = paginateEntry(post, measure);
-      return pgs;
-    });
-    // sizes are needed before measuring; re-run once sized (pages are created sized below)
-    // 2. contents (dry run to learn its length)
+    const entryPages = posts.map((post, i) => paginateEntry(post, i + 1, measure));
     let toc = buildContents(posts, measure, null);
     const tocStart = 3;
     const starts = [];
@@ -667,28 +669,26 @@ body {
     toc = buildContents(posts, measure, starts);
 
     const all = [];
-    const meta = []; // per page: entry index or null
+    const meta = [];
     const push = (el, entry) => { all.push(el); meta.push(entry == null ? null : entry); };
     push(coverPage(d));
-    push(endpaper(d.title_ur || "روزنامچہ", d.author ? "the diary of " + d.author : "a diary"));
+    push(endpaper("यात्री · " + (d.author_hi || d.author || ""), "PASSENGER · " + (d.author || "").toUpperCase()));
     push(titlePage(d));
     toc.forEach(p => push(p.page));
     entryPages.forEach((pgs, i) => pgs.forEach(p => push(p.page, i)));
     push(unwrittenPage());
     if ((all.length + 2) % 2 !== 0) push(unwrittenPage());
-    push(endpaper("آخر", "the end, for now"));
-    push(backCover());
+    push(endpaper("अगला पड़ाव जल्द", "NEXT STOP SOON"));
+    push(backCover(d));
 
-    // page numbers, sides
     all.forEach((el, i) => {
       el.classList.add(geo.spread && i % 2 === 1 ? "left" : "right");
       const foot = el.querySelector(".page-foot");
-      if (foot) foot.append(h("span", null, String(i)), h("span", { class: "ur", "aria-hidden": "true" }, toUrdu(i)));
+      if (foot) foot.append(h("span", null, String(i)), h("span", { class: "dv", "aria-hidden": "true" }, toDeva(i)));
       sizePage(el);
     });
     return { pages: all, meta, starts, posts };
   }
-
   /* ---------------- piano, generated live in the browser ---------------- */
   class Piano {
     constructor() { this.ctx = null; this.on = false; this.vol = 0.45; this.timer = null; this.next = 0; this.mel = 4; this.bar = 0; }
@@ -960,8 +960,8 @@ body {
     if (data.diary && data.diary.title_en) document.title = data.diary.title_en;
     try {
       await Promise.race([
-        Promise.all(["400 1em Gulzar", "400 1em 'Noto Nastaliq Urdu'", "italic 500 1em 'Cormorant Garamond'", "500 1em 'Cormorant Garamond'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'"]
-          .map(f => document.fonts.load(f, "روزنامچہ Aa"))),
+        Promise.all(["400 1em 'Rozha One'", "400 1em 'Special Elite'", "400 1em 'Tiro Devanagari Hindi'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'"]
+          .map(f => document.fonts.load(f, "राही Aa"))),
         new Promise(res => setTimeout(res, 3500))
       ]);
     } catch (e) { /* fall back to system fonts */ }
