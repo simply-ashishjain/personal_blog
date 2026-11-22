@@ -91,6 +91,8 @@ body {
 }
 .page-head .dv { font: 400 1.3em/1 var(--deva); letter-spacing: 0; text-transform: none; color: var(--stamp); }
 .page-head .ht { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: none; }
+.page-head .ht:lang(hi) { font: 400 1.2em/1 var(--deva); letter-spacing: 0; }
+.page-head .ht:lang(ur) { font: 400 1.1em/1 var(--urdu); letter-spacing: 0; }
 .page-body {
   --lh: 1.75em;
   flex: 1;
@@ -190,9 +192,10 @@ body {
 .toc-row:focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
 .toc-stop { flex: 0 0 2em; font: 400 0.8em/1 var(--type); color: var(--faded); }
 .toc-kind { flex: 0 0 3em; font: 400 0.92em/1 var(--deva); color: var(--stamp); }
-.toc-title { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 62%; }
+.toc-title { font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
 .toc-title[lang="hi"] { font-family: var(--deva); font-style: normal; font-size: 0.95em; }
 .toc-title[lang="ur"] { font-family: var(--urdu); font-style: normal; font-size: 0.85em; }
+.toc-roman { font: italic 400 0.92em var(--body); color: var(--faded); }
 .toc-dots { flex: 1; border-bottom: 1px dotted rgba(43,45,66,0.4); transform: translateY(-0.3em); min-width: 1em; }
 .toc-num { font: 400 0.9em/1 var(--type); min-width: 1.6em; text-align: right; }
 .toc-empty { font-style: italic; color: var(--faded); text-align: center; margin-top: 2em; }
@@ -485,49 +488,64 @@ body {
     return post.type === "poem" ? "poem" : post.type === "thought" ? "thought" : "prose";
   }
 
+  /* a post may carry two versions: Devanagari (body_hi) and the original Roman-script text (body) */
+  function versionsOf(post) {
+    if (post.body_hi) {
+      return [
+        { lang: "hi", title: post.title_hi || post.title, body: post.body_hi, label: "Devanagari", tag: "देवनागरी" },
+        { lang: "en", title: post.title, body: post.body, label: "Roman script", tag: "रोमन लिपि", roman: true }
+      ];
+    }
+    return [{ lang: post.lang || "en", title: post.title, body: post.body }];
+  }
+
   function paginateEntry(post, stop, measure) {
-    const lang = post.lang || "en";
     const kind = KINDS[post.type] || KINDS.thought;
     const pages = [];
-    const newPage = first => {
-      const p = ruledPage(lang);
-      p.body.classList.add(bodyClass(post));
-      if (first) {
-        p.head.append(h("span", null, `Stop ${pad2(stop)} · `, h("span", { class: "dv" }, "पड़ाव " + toDeva(stop))), h("span", { class: "dv" }, kind.hi));
-        const eh = h("div", { class: "entry-head" },
-          h("div", { class: "entry-meta" },
-            h("span", { class: "stamp-date", title: longDate(post.date) }, stampDate(post.date)),
-            h("span", { class: "entry-kind" }, kind.en + (post.sample ? " · sample" : ""))),
-          h("h2", { class: "entry-title", lang: lang, dir: "auto" }, post.title || "Untitled"));
-        eh.insertAdjacentHTML("beforeend", routeRule());
-        p.body.appendChild(eh);
-        if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, lang === "ur" ? "”" : "“"));
-      } else {
-        p.head.append(h("span", { class: "ht", dir: "auto" }, post.title || "Untitled"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
+    versionsOf(post).forEach(v => {
+      const lang = v.lang;
+      const newPage = first => {
+        const p = ruledPage(lang);
+        p.body.classList.add(bodyClass(post));
+        if (v.roman) p.body.classList.add("roman");
+        if (first) {
+          p.head.append(h("span", null, `Stop ${pad2(stop)} · `, h("span", { class: "dv" }, "पड़ाव " + toDeva(stop))), h("span", { class: "dv" }, v.tag || kind.hi));
+          const label = kind.en + (v.label ? " · " + v.label : "") + (post.sample ? " · sample" : "");
+          const eh = h("div", { class: "entry-head" },
+            h("div", { class: "entry-meta" },
+              h("span", { class: "stamp-date", title: longDate(post.date) }, stampDate(post.date)),
+              h("span", { class: "entry-kind" }, label)),
+            h("h2", { class: "entry-title", lang: lang, dir: "auto" }, v.title || "Untitled"));
+          eh.insertAdjacentHTML("beforeend", routeRule());
+          p.body.appendChild(eh);
+          if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, lang === "ur" ? "”" : "“"));
+        } else {
+          p.head.append(h("span", { class: "ht", dir: "auto", lang: lang }, v.title || "Untitled"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
+        }
+        p.count = 0;
+        measure.appendChild(p.page);
+        pages.push(p);
+        return p;
+      };
+      let pg = newPage(true);
+      for (const block of makeBlocks({ type: post.type, body: v.body, lang: lang })) {
+        let b = block;
+        while (b) {
+          pg.body.appendChild(b);
+          if (!overflows(pg.body)) { pg.count++; break; }
+          pg.body.removeChild(b);
+          const [head, tail] = splitBlock(b, pg.body);
+          if (head) { pg.body.appendChild(head); pg.count++; b = tail; }
+          else if (pg.count === 0 && pg.fresh) { pg.body.appendChild(b); pg.count++; break; }
+          if (!b) break;
+          pg = newPage(false);
+          pg.fresh = true;
+        }
       }
-      p.count = 0;
-      measure.appendChild(p.page);
-      pages.push(p);
-      return p;
-    };
-    let pg = newPage(true);
-    for (const block of makeBlocks(post)) {
-      let b = block;
-      while (b) {
-        pg.body.appendChild(b);
-        if (!overflows(pg.body)) { pg.count++; break; }
-        pg.body.removeChild(b);
-        const [head, tail] = splitBlock(b, pg.body);
-        if (head) { pg.body.appendChild(head); pg.count++; b = tail; }
-        else if (pg.count === 0 && pg.fresh) { pg.body.appendChild(b); pg.count++; break; }
-        if (!b) break;
-        pg = newPage(false);
-        pg.fresh = true;
-      }
-    }
-    const orn = h("div", { html: endOrn() });
-    pg.body.appendChild(orn);
-    if (overflows(pg.body)) orn.remove();
+      const orn = h("div", { html: endOrn() });
+      pg.body.appendChild(orn);
+      if (overflows(pg.body)) orn.remove();
+    });
     return pages;
   }
 
@@ -555,7 +573,9 @@ body {
       const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `Stop ${i + 1}: ${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
         h("span", { class: "toc-stop" }, pad2(i + 1)),
         h("span", { class: "toc-kind" }, kind.hi),
-        h("span", { class: "toc-title", lang: post.lang || "en", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
+        post.body_hi
+          ? h("span", { class: "toc-title", lang: "hi" }, post.title_hi || post.title, h("span", { class: "toc-roman", lang: "en" }, " · " + (post.title || "")))
+          : h("span", { class: "toc-title", lang: post.lang || "en", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
         h("span", { class: "toc-dots" }),
         h("span", { class: "toc-num" }, String(num)));
       pg.list.appendChild(row);

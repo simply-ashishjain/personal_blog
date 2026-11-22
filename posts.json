@@ -11,40 +11,14 @@
   },
   "posts": [
     {
-      "id": "the-lamp-stays-lit",
+      "id": "teri-kamiyan-meri-hain",
       "type": "poem",
-      "title": "The Lamp Stays Lit",
-      "date": "2026-11-08",
-      "lang": "en",
-      "sample": true,
-      "body": "I kept a lamp beside the window,\nnot for the road, not for the rain,\nbut for the words that come at midnight\nand will not knock twice.\n\nThey sit with me like old neighbours,\nshoes left at the door,\nspeaking of things the day was too loud\nto let me hear.\n\nBy morning they are gone again.\nOnly the oil is lower,\nand the page, which was empty,\nremembers everything."
-    },
-    {
-      "id": "on-unsent-letters",
-      "type": "thought",
-      "title": "On Unsent Letters",
-      "date": "2026-11-14",
-      "lang": "en",
-      "sample": true,
-      "body": "Some letters are not meant to be posted. Writing them is the whole journey; the envelope was only ever a place to keep the courage.\n\nI have a drawer of them. Each one is a door I closed gently instead of slamming."
-    },
-    {
-      "id": "raste-ne-poocha",
-      "type": "poem",
-      "title": "रास्ते ने पूछा",
-      "date": "2026-11-18",
+      "title": "Teri Kamiyan Meri Hain",
+      "title_hi": "तेरी कमियाँ मेरी हैं",
+      "date": "2026-11-23",
       "lang": "hi",
-      "sample": true,
-      "body": "रास्ते ने पूछा, कहाँ तक चलोगे?\nमैंने कहा, जहाँ तक तुम ले चलो।\n\nपैरों में थकान है, आँखों में सुबह,\nमंज़िल अभी दूर है, पर चलना अच्छा लगता है।"
-    },
-    {
-      "id": "the-tailor-of-anarkali",
-      "type": "story",
-      "title": "The Tailor of Anarkali",
-      "date": "2026-11-22",
-      "lang": "en",
-      "sample": true,
-      "body": "In a lane so narrow that two bicycles had to negotiate like diplomats, there was a tailor who never measured anyone. Customers would stand before him with their arms out, waiting for the yellow tape, and he would only look at them for a long moment, the way one looks at weather.\n\n“You walk as though you are carrying something heavy on your left side,” he told a schoolteacher once. She laughed and said it was only her bag of exercise books. When the kurta came back, the left shoulder had been cut a little wider, and for the first time in years she did not feel her coat pulling her toward the ground.\n\nPeople said he was guessing. His apprentice, a boy named Faraz who swept the floor and threaded needles faster than anyone in the bazaar, knew better. The old man was listening. He listened to how a person stood when they thought no one was watching, to the half-step a man took before he spoke to his father, to the way a bride held her hands as if they belonged to someone else.\n\nOne winter evening, when the gas heaters hissed and the lane smelled of roasted peanuts, a stranger came in and asked for a coat that would make him look important. The tailor looked at him for longer than usual. Then he set down his scissors.\n\n“I can make you a coat,” he said. “But it will only fit the man who walks out of here, not the one who walked in. Come back when you know which one you want to be.”\n\nThe stranger left without a word. Faraz thought that was the end of it. But in spring the man returned, quieter, his shoulders lower, and this time he did not ask for anything at all. He simply stood with his arms out and waited, and the old tailor, smiling, reached for the yellow tape."
+      "body_hi": "तू मेरा है, और तेरी सारी कमियाँ भी मेरी हैं..\nग़ौर से सुनना, ये बात ज़रा गहरी है..\n\nकि तू मेरा है, और तेरी सारी कमियाँ भी मेरी है..\n\n\nहर वो साथ जो सफ़र में मिला था..\nहर वो हाथ जो कंधे पे रखा था...\nवो थोड़ा पीछे छूट गया तो क्या..\nवो सारी यादें तो सुनहरी हैं..\n\nतू मेरा है...तेरी...\n\nहर वो बात जो आधी रह गई...\nवो लड़ाई जो आँसुओं में बह गई...\nवो कभी सुलझ नहीं पाई तो क्या..\nवो फ़िक्र एक दूसरे की, मन में आज भी रहती है..\n\nक्योंकि तू मेरा है...तेरी सारी...\n\nहर वो क़िस्सा, जो दोनों ही सुनाते होंगे...\nएक दूसरे के राज़, जो आज भी सबसे छुपाते होंगे...\nअब वो वक़्त गुज़र गया तो क्या...\nउन लम्हों की गूँज, कानों में आज भी कहती है..\n\nकि तू मेरा है..और तेरी सारी कमियाँ भी मेरी है...\n\n\nतेरे लिए मैं सबसे ज़रूरी क्यों नहीं..\nतेरी ज़िंदगी..मेरे बिना अधूरी क्यों नहीं..\n\nतू ऐसा क्यों करता है..और वैसा क्यों नहीं..\nतू ऐसा क्यों समझा...जैसा था ही नहीं...\n\nतू बीमारी में कभी मेरा हाल क्यों नहीं पूछता...\n\"क्या हुआ?\" \"सब ठीक तो है?\" , ऐसे सवाल क्यों नहीं पूछता...\n\nन रूठने में मनाता है..अच्छी ख़बर मुझे सबसे बाद में सुनाता है...\nतू रिश्तों के इम्तिहान में रोज़ हार जाता है...\n\nतू अपनी उन सारी कमियों पे काम क्यों नहीं करता...\nजितना मैं डरता हूँ...मुझे खोने से उतना ही क्यों नहीं डरता...\n\nफ़्यूऊऊ...\n\nजज़्बातों से हार,\nग़लत फ़हमी का शिकार,\nकई बार कोई अपना, कमियों को लेकर; सिर्फ़ एक कमी छोड़ जाता है...\nतुम्हारे दिल में बनाकर घर, एक दिन वो घर तोड़ भी जाता है..\n\nकहीं मौक़ा मिले तो उससे बस इतना कहना ...\n\nये बात ज़रा गहरी है..\n\n\nअगर मन हो तो दिल में घर फिर से बना ले, उसके नीचे की ज़मीन आज भी तेरी है...\n\nतू भी मुझे अब वैसे ही अपना ले, जैसे मेरी सारी कमियाँ भी तेरी हैं...\n\nक्योंकि मेरी ज़िंदगी में हो, या बस मेरे ख़यालों में...\n\nहै तो तू आज भी मेरी ही...और हाँ, तेरी सारी कमियाँ भी मेरी हैं...",
+      "body": "Tu mera hai, ar teri saari kamiya bhi meri hain..\nGaur se sunna, ye baat zara gehri hai..\n\nk tu mera hai, ar teri saari kamiya bhi meri hai..\n\n\nHar wo sath jo safar mei mila tha..\nHar wo hath jo kandhe pe rakha tha...\nWo thoda peeche chut gaya to kya..\nwo saari yaadein toh sunehri hain..\n\ntu mera hai...teri...\n\nhar wo baat jo aadhi reh gayi...\nWo ladai jo aansuon mei beh gayi...\nWo kabhi sulajh nai paayi toh kya..\nWo fikra ek dusre ki, mann mei aaj b rehti hai..\n\nkyuki tu mera hai...teri saari...\n\nHar wo qissa, jo dono hi sunaate honge...\nek dusre k raaz, jo aaj bhi sabse chupate honge...\nab wo waqt guzar gaya toh kya...\nUnn lamho ki goonj, kaano mei aaj b kehti hai..\n\nk tu mera hai..ar teri saari kamiyan bhi meri hai...\n\n\nTere liye mai sabse zaroori kyu nahi..\nTeri zindagi..mere bina adhoori kyu nahi..\n\nTu aisa kyu krta hai..ar waisa kyu nahi..\nTu aisa kyu samjha...jaisa tha hi nahi...\n\nTu bimaari mei kbi mera haal kyu nahi puchta...\n\"kya hua?\" \"Sab theek toh hai?\" , aise sawal kyu nahi puchta...\n\nna ruthne mei manaata hai..acchi khabar mujhe sabse baad mei sunaata hai...\nTu rishton k imtihaan mei roz haar jaata hai...\n\nTu apni unn saari kamiyon pe kaam kyu nahi karta...\nJitna mai darrta hu...Mujje khone se utna hi kyu nahi darrta...\n\nPheewww...\n\nJazbaato se haar,\nGalat fehmi ka shikaar,\nkai bar koi apna, kamiyon ko lekar; sirf ek kami chodd jaata hai...\nTumhar dil mei banakar ghar, ek din wo ghar todd bhi jaata hai..\n\nkahi mauka mile toh usse bas itna kehna ...\n\nye baat zara gehri hai..\n\n\nAgr mann ho toh dil mei ghar fir se bana le, uske neeche ki zameen aaj bhi teri hai...\n\ntu bhi muje ab waise hi apna le, jaise meri saari kamiya bhi teri hain...\n\nkyuki meri zindagi mei ho, ya bas mere khayaalo mei...\n\n hai toh tu aaj bhi meri hi...ar haan, teri saari kamiyan bhi meri hain..."
     }
   ]
 }
