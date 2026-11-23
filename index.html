@@ -271,7 +271,7 @@ body {
 .theme-box .toc-head .en, .theme-box .toc-cols { font-family: var(--type); }
 .theme-box .toc-kind { font: 600 1.05em/1 var(--hand); color: var(--stamp); }
 .theme-box .toc-row { font-family: var(--body); }
-.theme-box .toc-num { font-family: var(--hand); font-size: 1.1em; font-weight: 600; }
+.theme-box .toc-num { font-family: var(--hand); font-size: 1.1em; font-weight: 600; padding-right: 0.25em; min-width: 1.9em; }
 .theme-box .unwritten .hand-big { font: 600 2.3em/1.3 var(--hand); color: rgba(43,36,30,0.3); }
 
 .page.box { background-color: var(--boxpaper); background-image: radial-gradient(rgba(70,45,20,0.10) 1px, transparent 1.2px), radial-gradient(rgba(255,240,210,0.08) 1px, transparent 1.2px); background-size: 6px 6px, 9px 9px; background-position: 0 0, 3px 4px; color: #2a2118; font-family: var(--type); }
@@ -300,6 +300,17 @@ body {
 .box-title .bt-by { margin-top: 1.2em; font: 400 0.8em/1.4 var(--type); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(43,36,30,0.6); }
 .box-title .bt-stamp { margin-top: 2.2em; display: flex; flex-direction: column; align-items: center; gap: 0.3em; padding: 0.5em 0.8em; border: 2.5px solid #b0352d; color: #b0352d; transform: rotate(-6deg); font: 700 0.8em/1 var(--type); letter-spacing: 0.18em; opacity: 0.85; }
 .box-title .bt-stamp svg { width: 1.5em; height: 2em; }
+
+/* sections */
+.toc-section { margin-top: 0.5em; padding-top: 0.2em; font: 400 0.72em/var(--lh) var(--type); letter-spacing: 0.24em; text-transform: uppercase; color: var(--stamp); }
+.theme-box .toc-section { font: 600 1.3em/var(--lh) var(--hand); letter-spacing: 0.01em; text-transform: lowercase; }
+.section-page .sp-title { font: 400 3.4em/1.3 var(--display); color: var(--stamp); }
+.theme-box .section-page .sp-title { font: 400 4em/1.2 var(--marker); color: #1f1a16; transform: rotate(-3deg); }
+.section-page .sp-note { font: italic 400 1.15em/1.4 var(--body); color: rgba(43,36,30,0.7); max-width: 16em; }
+.theme-box .section-page .sp-note { font: 600 1.6em/1.25 var(--hand); font-style: normal; }
+.section-page .sp-count { margin-top: 1.4em; font: 400 0.75em/1.4 var(--type); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(43,36,30,0.5); }
+.tape-rule.wide { width: 9em; margin: 0.8em auto 0; }
+.scene-break { text-align: center; letter-spacing: 0.6em; color: var(--stamp); opacity: 0.7; margin: 0.2em 0; }
 
 /* ---------- bookshelf (landing page) ---------- */
 #shelf { width: 100%; flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 28px; padding: 24px 16px 8px; }
@@ -550,8 +561,9 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
       return chunks.map(ch => h("div", { class: "stanza" }, ch.split("\n").map(l => h("div", { class: "line" }, l.trim() || " "))));
     }
     return chunks.map((ch, i) => {
+      if (/^(\*\s*){3}$/.test(ch)) return h("div", { class: "scene-break", "aria-hidden": "true" }, "* * *");
       const cls = [];
-      if (i === 0) cls.push("first");
+      if (i === 0 || /^(\*\s*){3}$/.test(chunks[i - 1] || "")) cls.push("first");
       if (i === 0 && post.type === "story" && (post.lang || "en") === "en") cls.push("dropcap");
       return h("p", { class: cls.join(" ") || null }, ch.replace(/\s*\n\s*/g, " "));
     });
@@ -628,7 +640,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     return pages;
   }
 
-  function buildContents(posts, measure, starts) {
+  function buildContents(posts, measure, starts, stops, heads) {
     const pages = [];
     const newPage = first => {
       const p = ruledPage("en");
@@ -648,23 +660,28 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     };
     let pg = newPage(true);
     if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, isBox() ? "Nothing unpacked yet. The first piece is on its way." : "The first stop is still ahead."));
+    const place = el => {
+      pg.list.appendChild(el);
+      if (overflows(pg.body) && pg.list.children.length > 1) {
+        el.remove();
+        pg = newPage(false);
+        pg.list.appendChild(el);
+      }
+    };
     posts.forEach((post, i) => {
+      if (heads && heads[i]) place(h("div", { class: "toc-section" }, heads[i]));
       const kind = KINDS[post.type] || KINDS.thought;
       const num = starts ? starts[i] : 88;
-      const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `Stop ${i + 1}: ${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
-        h("span", { class: "toc-stop" }, pad2(i + 1)),
+      const nth = stops ? stops[i] : i + 1;
+      const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `${isBox() ? "Number" : "Stop"} ${nth}: ${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
+        h("span", { class: "toc-stop" }, pad2(nth)),
         h("span", { class: "toc-kind" }, isBox() ? kind.en : kind.hi),
         post.body_hi
           ? h("span", { class: "toc-title", lang: "hi" }, post.title_hi || post.title, h("span", { class: "toc-roman", lang: "en" }, " · " + (post.title || "")))
           : h("span", { class: "toc-title", lang: post.lang || "en", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
         h("span", { class: "toc-dots" }),
         h("span", { class: "toc-num" }, String(num)));
-      pg.list.appendChild(row);
-      if (overflows(pg.body) && pg.list.children.length > 1) {
-        row.remove();
-        pg = newPage(false);
-        pg.list.appendChild(row);
-      }
+      place(row);
     });
     return pages;
   }
@@ -737,6 +754,17 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
   function boxUnwritten() {
     const p = blankPage("unwritten");
     p.appendChild(h("div", { class: "center-page" }, h("div", { class: "hand-big" }, "more to unpack…"), h("div", { class: "en" }, "pages still sealed")));
+    return p;
+  }
+
+  function sectionPage(sec, count) {
+    const p = blankPage("section-page");
+    const c = h("div", { class: "center-page" },
+      h("div", { class: "sp-title" }, sec.label || ""),
+      sec.note ? h("div", { class: "sp-note" }, sec.note) : null);
+    if (isBox()) c.appendChild(h("div", { class: "tape-rule wide", "aria-hidden": "true" }));
+    c.appendChild(h("div", { class: "sp-count" }, `${count} ${count === 1 ? "piece" : "pieces"}`));
+    p.appendChild(c);
     return p;
   }
 
@@ -828,14 +856,31 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     THEME = d.design || "ticket";
     measure.className = "bookfont theme-" + THEME;
 
-    const entryPages = posts.map((post, i) => paginateEntry(post, i + 1, measure));
-    let toc = buildContents(posts, measure, null);
+    const sections = Array.isArray(d.sections) && d.sections.length ? d.sections : null;
+    const secOf = post => {
+      if (!sections) return -1;
+      const k = sections.findIndex(sc => (sc.types || []).includes(post.type));
+      return k < 0 ? sections.length - 1 : k;
+    };
+    const secIdx = posts.map(secOf);
+    const stops = [], heads = [];
+    let prev = null, n = 0;
+    posts.forEach((post, i) => {
+      const fresh = sections && secIdx[i] !== prev;
+      if (fresh) { n = 0; prev = secIdx[i]; }
+      n++;
+      stops.push(sections ? n : i + 1);
+      heads.push(fresh ? (sections[secIdx[i]].label || "") : null);
+    });
+    const secCount = k => secIdx.filter(x => x === k).length;
+    const entryPages = posts.map((post, i) => paginateEntry(post, stops[i], measure));
+    let toc = buildContents(posts, measure, null, stops, heads);
     const tocStart = 3;
     const starts = [];
     let idx = tocStart + toc.length;
-    entryPages.forEach(pgs => { starts.push(idx); idx += pgs.length; });
+    entryPages.forEach((pgs, i) => { if (heads[i] != null) idx += 1; starts.push(idx); idx += pgs.length; });
     toc.forEach(p => p.page.remove());
-    toc = buildContents(posts, measure, starts);
+    toc = buildContents(posts, measure, starts, stops, heads);
 
     const all = [];
     const meta = [];
@@ -847,7 +892,10 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
       push(titlePage(d));
     }
     toc.forEach(p => push(p.page));
-    entryPages.forEach((pgs, i) => pgs.forEach(p => push(p.page, i)));
+    entryPages.forEach((pgs, i) => {
+      if (heads[i] != null) push(sectionPage(sections[secIdx[i]], secCount(secIdx[i])));
+      pgs.forEach(p => push(p.page, i));
+    });
     const blank = isBox() ? boxUnwritten : unwrittenPage;
     push(blank());
     if ((all.length + 2) % 2 !== 0) push(blank());
@@ -1026,6 +1074,11 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
         return;
       }
       (find(pick(p)) || books[0]).posts.push(p);
+    });
+    books.forEach(b => {
+      if (!Array.isArray(b.sections) || !b.sections.length) return;
+      const rank = p => { const k = b.sections.findIndex(sc => (sc.types || []).includes(p.type)); return k < 0 ? b.sections.length - 1 : k; };
+      b.posts = b.posts.map((p, i) => [rank(p), i, p]).sort((x, y) => x[0] - y[0] || x[1] - y[1]).map(x => x[2]);
     });
   }
   function route() {
