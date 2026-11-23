@@ -254,6 +254,25 @@ body {
 .plate .dv { display: block; font: 400 1.45em/1.5 var(--display); color: var(--stamp); }
 .plate .en { display: block; margin-top: 0.4em; padding-top: 0.6em; border-top: 1.5px dashed rgba(43,45,66,0.4); font-size: 0.8em; letter-spacing: 0.12em; }
 
+/* ---------- bookshelf (landing page) ---------- */
+#shelf { width: 100%; flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 28px; padding: 24px 16px 8px; }
+#shelf[hidden], #stage[hidden] { display: none; }
+.shelf-head { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.shelf-head .dv { font: 400 2.1rem/1.4 var(--display); color: var(--paper); }
+.shelf-head .en { font: 400 0.82rem/1.4 var(--type); letter-spacing: 0.3em; text-transform: uppercase; color: rgba(242, 230, 204, 0.75); }
+.shelf-head .by { margin-top: 6px; font: italic 400 1rem/1.4 var(--body); color: rgba(242, 230, 204, 0.55); }
+.shelf-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 40px 48px; padding-bottom: 16px; }
+.shelf-card { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--paper); text-decoration: none; border-radius: 6px; }
+.shelf-cover { transform: rotate(var(--tilt)); transition: transform 0.35s ease, box-shadow 0.35s ease; box-shadow: 0 18px 36px rgba(0,0,0,0.45); }
+.shelf-cover .page { position: relative; }
+.shelf-cover .cv-stamp, .shelf-cover .cv-hi { color: var(--stamp); border-color: var(--stamp); }
+.shelf-card:hover .shelf-cover, .shelf-card:focus-visible .shelf-cover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 26px 44px rgba(0,0,0,0.5); }
+.shelf-card:focus-visible { outline: 2px solid var(--brass); outline-offset: 10px; }
+.shelf-label { margin-top: 14px; font: 400 0.95rem/1.3 var(--type); letter-spacing: 0.08em; }
+.shelf-count { font: 400 0.95rem/1.3 var(--deva); color: rgba(242, 230, 204, 0.6); }
+body[data-mode="shelf"] #controls { margin-bottom: 4px; }
+@media (prefers-reduced-motion: reduce) { .shelf-cover { transition: none; } }
+
 /* ---------- controls ---------- */
 #controls {
   display: flex;
@@ -288,6 +307,7 @@ body {
 .music { display: inline-flex; align-items: center; gap: 8px; }
 #vol { width: 78px; accent-color: var(--brass); }
 #vol[hidden] { display: none; }
+#controls [hidden] { display: none !important; }
 .sep { width: 1px; height: 20px; background: rgba(242, 230, 204, 0.2); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -312,20 +332,25 @@ body {
 <body>
 <div id="app">
   <div id="stage" aria-live="polite"><p id="loading">Boarding…</p></div>
+  <section id="shelf" aria-label="Bookshelf" hidden></section>
   <nav id="controls" aria-label="Diary controls" hidden>
-    <button class="btn icon" id="prev" type="button" aria-label="Previous page">
+    <button class="btn" id="shelfbtn" type="button" data-book-only>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h4v16H4zM10 4h4v16h-4zM16.5 5.2l3.8-1 3.2 15.5-3.8 1z"/></svg>
+      <span>Shelf</span>
+    </button>
+    <button class="btn icon" id="prev" data-book-only type="button" aria-label="Previous page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
-    <button class="btn" id="toc" type="button">
+    <button class="btn" id="toc" data-book-only type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
       Contents
     </button>
-    <span id="pageinfo">Cover</span>
-    <button class="btn" id="latest" type="button">
+    <span id="pageinfo" data-book-only>Cover</span>
+    <button class="btn" id="latest" data-book-only type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10v18l-5-4-5 4z"/></svg>
       <span>Latest<span class="label-long"> entry</span></span>
     </button>
-    <span class="sep" aria-hidden="true"></span>
+    <span class="sep" data-book-only aria-hidden="true"></span>
     <span class="music">
       <button class="btn" id="music" type="button" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>
@@ -334,7 +359,7 @@ body {
       <label class="visually-hidden" for="vol">Piano volume</label>
       <input id="vol" type="range" min="0" max="100" value="45" hidden>
     </span>
-    <button class="btn icon" id="next" type="button" aria-label="Next page">
+    <button class="btn icon" id="next" data-book-only type="button" aria-label="Next page">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
     </button>
   </nav>
@@ -845,25 +870,52 @@ body {
     }
   }
 
-  /* ---------------- app ---------------- */
+  /* ---------------- app: a shelf of books, each a ticket ---------------- */
   const stage = document.getElementById("stage");
+  const shelf = document.getElementById("shelf");
   const controls = document.getElementById("controls");
   const info = document.getElementById("pageinfo");
   const piano = new Piano();
   let flip = null, book = null, geo = null, data = null, current = 0;
+  let books = [], currentBook = null;
+
+  function setupBooks() {
+    const base = data.diary || {};
+    const list = (data.books && data.books.length) ? data.books : [{ id: "diary" }];
+    books = list.map(b => Object.assign({}, base, b, { posts: [] }));
+    const pick = p => p.book || ((p.body_hi || p.lang === "hi") ? "hindi" : "english");
+    (data.posts || []).forEach(p => {
+      const b = books.find(x => x.id === pick(p)) || books[0];
+      b.posts.push(p);
+    });
+  }
+  function route() {
+    const id = decodeURIComponent((location.hash || "").slice(1));
+    if (!id || id === "shelf") return { book: null };
+    const b = books.find(x => x.id === id);
+    if (b) return { book: b, entry: null };
+    for (const x of books) {
+      const i = x.posts.findIndex(p => p.id === id);
+      if (i >= 0) return { book: x, entry: i };
+    }
+    return { book: null };
+  }
 
   function entryAt(i) { return book && book.meta[i] != null ? book.meta[i] : null; }
-  function indexForHash() {
-    const id = decodeURIComponent((location.hash || "").slice(1));
-    if (!id || !book) return null;
-    const i = book.posts.findIndex(p => p.id === id);
-    return i >= 0 ? book.starts[i] : null;
+  function visibleEntry(i) {
+    // on a two-page spread, prefer an entry that starts on either visible page (the later one wins)
+    const pages = geo && geo.spread && i > 0 ? (i % 2 === 1 ? [i, i + 1] : [i - 1, i]) : [i];
+    for (const p of pages.slice().reverse()) {
+      const k = book.starts.indexOf(p);
+      if (k >= 0) return k;
+    }
+    return entryAt(pages[0]);
   }
   function setHash(i) {
     try {
-      const e = entryAt(i);
-      const want = e != null ? "#" + book.posts[e].id : "";
-      if ((location.hash || "") !== want) history.replaceState(null, "", want || (location.pathname + location.search));
+      const e = visibleEntry(i);
+      const want = "#" + (e != null ? book.posts[e].id : currentBook.id);
+      if ((location.hash || "") !== want) history.replaceState(null, "", want);
     } catch (err) { /* hash is a convenience only */ }
   }
   function describe(i) {
@@ -884,12 +936,61 @@ body {
     i = Math.max(0, Math.min(book.pages.length - 1, i));
     if (reduced) flip.turnToPage(i), onPage(i); else flip.flip(i);
   }
-
-  function render(startAt) {
-    geo = geometry();
-    book = buildBook(data, geo);
+  function setMode(mode) {
+    document.body.dataset.mode = mode;
+    controls.querySelectorAll("[data-book-only]").forEach(el => { el.hidden = mode !== "book"; });
+  }
+  function teardownBook() {
     if (flip) { try { flip.destroy(); } catch (e) {} flip = null; }
     stage.innerHTML = "";
+  }
+
+  /* ----- the shelf ----- */
+  function renderShelf() {
+    teardownBook();
+    book = null; currentBook = null;
+    stage.hidden = true;
+    shelf.hidden = false;
+    shelf.innerHTML = "";
+    setMode("shelf");
+    const d = data.diary || {};
+    document.title = d.title_en || "Raahi";
+    const vw = window.innerWidth;
+    const wide = vw >= 640;
+    const cw = wide ? Math.min(300, Math.floor((vw - 120) / Math.max(2, books.length))) : Math.min(260, vw - 80);
+    const ch = Math.round(cw / 0.7);
+    const fs = (cw * 0.034).toFixed(2) + "px";
+    shelf.appendChild(h("header", { class: "shelf-head" },
+      h("span", { class: "dv", lang: "hi" }, "अपना टिकट चुनें"),
+      h("span", { class: "en" }, "Choose your ticket"),
+      h("span", { class: "by" }, (d.subtitle || "poems · thoughts · stories") + " · " + (d.author || ""))));
+    const row = h("div", { class: "shelf-row" });
+    books.forEach((b, i) => {
+      const cover = coverPage(b);
+      cover.style.width = cw + "px";
+      cover.style.height = ch + "px";
+      const n = b.posts.length;
+      const count = n ? `${n} ${n === 1 ? "stop" : "stops"} · ${toDeva(n)} पड़ाव` : "first stop ahead";
+      const card = h("a", { class: "shelf-card", href: "#" + b.id, style: `--stamp: ${b.stamp || "#b23a3a"}; --tilt: ${i % 2 ? 2 : -2}deg`, "aria-label": `Open ${b.shelf_label || b.title_en}, ${count}` },
+        h("div", { class: "shelf-cover bookfont", style: `font-size: ${fs}` }, cover),
+        h("span", { class: "shelf-label" }, b.shelf_label || b.title_en || ""),
+        h("span", { class: "shelf-count" }, count));
+      row.appendChild(card);
+    });
+    shelf.appendChild(row);
+    info.textContent = "Bookshelf";
+  }
+
+  /* ----- one book ----- */
+  function render(startAt, entryIdx) {
+    shelf.hidden = true;
+    stage.hidden = false;
+    setMode("book");
+    geo = geometry();
+    document.documentElement.style.setProperty("--stamp", currentBook.stamp || "#b23a3a");
+    book = buildBook({ diary: currentBook, posts: currentBook.posts }, geo);
+    teardownBook();
+    document.title = (currentBook.title_en || "Raahi") + (currentBook.shelf_label ? " · " + currentBook.shelf_label : "");
     stage.classList.remove("nolib");
     stage.style.width = (geo.spread ? geo.w * 2 : geo.w) + "px";
     stage.style.height = geo.h + "px";
@@ -897,7 +998,9 @@ body {
     stage.appendChild(block);
     book.pages.forEach(p => block.appendChild(p));
     document.getElementById("measure").innerHTML = "";
-    const start = Math.max(0, Math.min(book.pages.length - 1, startAt || 0));
+    let start = startAt || 0;
+    if (entryIdx != null && book.starts[entryIdx] != null) start = book.starts[entryIdx];
+    start = Math.max(0, Math.min(book.pages.length - 1, start));
     if (!window.St || !St.PageFlip) {
       stage.classList.add("nolib");
       stage.style.height = "";
@@ -927,18 +1030,30 @@ body {
       if (row && row.dataset.page) go(parseInt(row.dataset.page, 10));
     });
   }
+  function openBook(b, entryIdx) {
+    currentBook = b;
+    render(0, entryIdx);
+  }
+  function follow() {
+    const r = route();
+    if (!r.book) { if (currentBook || !shelf.childElementCount) renderShelf(); return; }
+    if (r.book !== currentBook) { openBook(r.book, r.entry); return; }
+    if (r.entry != null) { const i = book.starts[r.entry]; if (i != null && i !== current) go(i); }
+  }
 
   function wire() {
     document.getElementById("prev").addEventListener("click", () => flip && flip.flipPrev());
     document.getElementById("next").addEventListener("click", () => flip && flip.flipNext());
     document.getElementById("toc").addEventListener("click", () => go(3));
     document.getElementById("latest").addEventListener("click", () => {
-      if (book.starts.length) go(book.starts[book.starts.length - 1]);
+      if (book && book.starts.length) go(book.starts[book.starts.length - 1]);
     });
+    document.getElementById("shelfbtn").addEventListener("click", () => { location.hash = "shelf"; });
     document.addEventListener("keydown", e => {
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
-      if (e.key === "ArrowRight") { flip && flip.flipNext(); e.preventDefault(); }
-      if (e.key === "ArrowLeft") { flip && flip.flipPrev(); e.preventDefault(); }
+      if (!flip) return;
+      if (e.key === "ArrowRight") { flip.flipNext(); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { flip.flipPrev(); e.preventDefault(); }
     });
     const mbtn = document.getElementById("music"), mlabel = document.getElementById("musiclabel"), vol = document.getElementById("vol");
     mbtn.addEventListener("click", async () => {
@@ -956,11 +1071,12 @@ body {
       if (document.hidden && piano.on) piano.ctx.suspend().catch(() => {});
       else if (!document.hidden && piano.on) piano.ctx.resume().catch(() => {});
     });
-    window.addEventListener("hashchange", () => { const i = indexForHash(); if (i != null && i !== current) go(i); });
+    window.addEventListener("hashchange", follow);
     let t = null;
     window.addEventListener("resize", () => {
       clearTimeout(t);
       t = setTimeout(() => {
+        if (!currentBook) { renderShelf(); return; }
         const g = geometry();
         if (Math.abs(g.w - geo.w) > 6 || Math.abs(g.h - geo.h) > 6 || g.spread !== geo.spread) render(current);
       }, 280);
@@ -977,7 +1093,7 @@ body {
       document.getElementById("loading").textContent = "The diary’s pages could not be loaded. Reload the page to try again.";
       return;
     }
-    if (data.diary && data.diary.title_en) document.title = data.diary.title_en;
+    setupBooks();
     try {
       await Promise.race([
         Promise.all(["400 1em 'Rozha One'", "400 1em 'Special Elite'", "400 1em 'Tiro Devanagari Hindi'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'"]
@@ -985,11 +1101,9 @@ body {
         new Promise(res => setTimeout(res, 3500))
       ]);
     } catch (e) { /* fall back to system fonts */ }
-    render(0);
     controls.hidden = false;
     wire();
-    const i = indexForHash();
-    if (i != null) setTimeout(() => go(i), 400);
+    follow();
   }
   main();
 })();
