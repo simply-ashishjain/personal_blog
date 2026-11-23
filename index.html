@@ -521,6 +521,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
         { lang: "en", title: post.title, body: post.body, label: "Roman script", tag: "रोमन लिपि", roman: true }
       ];
     }
+    if (post.roman) return [{ lang: "en", title: post.title, body: post.body, label: "Hindi · Roman script", tag: "रोमन लिपि", roman: true }];
     return [{ lang: post.lang || "en", title: post.title, body: post.body }];
   }
 
@@ -883,10 +884,18 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     const base = data.diary || {};
     const list = (data.books && data.books.length) ? data.books : [{ id: "diary" }];
     books = list.map(b => Object.assign({}, base, b, { posts: [] }));
+    const find = id => books.find(x => x.id === id);
     const pick = p => p.book || ((p.body_hi || p.lang === "hi") ? "hindi" : "english");
     (data.posts || []).forEach(p => {
-      const b = books.find(x => x.id === pick(p)) || books[0];
-      b.posts.push(p);
+      if (p.body_hi) {
+        // a Hindi poem written in Roman letters: Devanagari in the Hindi book, the Roman original in the English book
+        const hi = find("hindi") || books[0];
+        const en = find("english");
+        hi.posts.push(Object.assign({}, p, { title: p.title_hi || p.title, body: p.body_hi, lang: "hi", body_hi: null, title_hi: null }));
+        if (en) en.posts.push(Object.assign({}, p, { id: p.id + "-roman", lang: "en", body_hi: null, title_hi: null, roman: true }));
+        return;
+      }
+      (find(pick(p)) || books[0]).posts.push(p);
     });
   }
   function route() {
