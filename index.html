@@ -6,7 +6,7 @@
 <title>Raahi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Special+Elite&family=Tiro+Devanagari+Hindi:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Nastaliq+Urdu:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Special+Elite&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Caveat:wght@500;700&family=Permanent+Marker&family=Tiro+Devanagari+Hindi:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Nastaliq+Urdu:wght@400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Layout: a one-way ticket diary on a slate desk; a two-page spread on wide screens, one page on phones */
@@ -253,6 +253,53 @@ body {
 }
 .plate .dv { display: block; font: 400 1.45em/1.5 var(--display); color: var(--stamp); }
 .plate .en { display: block; margin-top: 0.4em; padding-top: 0.6em; border-top: 1.5px dashed rgba(43,45,66,0.4); font-size: 0.8em; letter-spacing: 0.12em; }
+
+/* ---------- Unwrapped: the fragile box ---------- */
+.theme-box { --display: "Fraunces", Georgia, serif; --body: "Fraunces", Georgia, serif; --hand: "Caveat", cursive; --marker: "Permanent Marker", cursive; --stamp: #b0352d; }
+.theme-box .page { background-color: #fbf6ee; }
+.theme-box .page-head { font: 600 1.05em/1.2 var(--hand); text-transform: none; letter-spacing: 0.01em; color: rgba(43,36,30,0.62); border-bottom-style: solid; border-bottom-color: rgba(176,53,45,0.25); }
+.theme-box .page-head .hand { color: var(--stamp); }
+.theme-box .page-head .ht { font: 600 1em/1.2 var(--hand); }
+.theme-box .page-body { --lh: 1.8em; font-size: 0.97em; }
+.theme-box .entry-kind { font: 600 1.15em/1 var(--hand); letter-spacing: 0.02em; text-transform: none; color: rgba(43,36,30,0.6); }
+.theme-box .entry-title { font: italic 600 1.95em/1.15 var(--display); letter-spacing: -0.01em; }
+.tape-rule { width: 7em; height: 0.95em; margin-top: 0.45em; background: var(--tapeink, #e3cf9c); opacity: 0.85; transform: rotate(-1.5deg); box-shadow: inset 0 2px 0 rgba(255,255,255,0.35); clip-path: polygon(2% 0, 100% 6%, 98% 100%, 0 92%); }
+.theme-box .thought p { font: italic 400 1.1em/var(--lh) var(--display); }
+.theme-box .prose p.dropcap::first-letter { font: italic 600 3.5em/0.82 var(--display); }
+.theme-box .page-foot { font: 600 0.95em/1 var(--hand); }
+.theme-box .toc-head .marker { font: 400 2.3em/1.3 var(--marker); color: #1f1a16; transform: rotate(-2deg); }
+.theme-box .toc-head .en, .theme-box .toc-cols { font-family: var(--type); }
+.theme-box .toc-kind { font: 600 1.05em/1 var(--hand); color: var(--stamp); }
+.theme-box .toc-row { font-family: var(--body); }
+.theme-box .toc-num { font-family: var(--hand); font-size: 1.1em; font-weight: 600; }
+.theme-box .unwritten .hand-big { font: 600 2.3em/1.3 var(--hand); color: rgba(43,36,30,0.3); }
+
+.page.box { background-color: var(--boxpaper); background-image: radial-gradient(rgba(70,45,20,0.10) 1px, transparent 1.2px), radial-gradient(rgba(255,240,210,0.08) 1px, transparent 1.2px); background-size: 6px 6px, 9px 9px; background-position: 0 0, 3px 4px; color: #2a2118; font-family: var(--type); }
+.bx-seam { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: rgba(80,50,20,0.3); }
+.bx-tape { position: absolute; left: 0; right: 0; top: 38.4%; height: 12.8%; background: var(--tape); opacity: 0.8; box-shadow: inset 0 0.5em 0 rgba(255,255,255,0.14), inset 0 -0.3em 0 rgba(0,0,0,0.06); }
+.bx-tape.top { top: 0; height: 9%; }
+.bx-up { position: absolute; left: 8%; top: 6.5%; display: flex; align-items: center; gap: 0.7em; font-size: 0.74em; letter-spacing: 0.2em; }
+.bx-up svg { width: 2.8em; height: 2.2em; }
+.bx-fragile { position: absolute; right: 7.3%; top: 5.6%; display: flex; flex-direction: column; align-items: center; gap: 0.3em; padding: 0.6em 0.8em; border: 3px solid #b0352d; color: #b0352d; transform: rotate(5deg); font-size: 0.98em; letter-spacing: 0.18em; font-weight: 700; }
+.bx-fragile svg { width: 2em; height: 2.7em; }
+.bx-title { position: absolute; left: 0; right: 0; top: 37%; text-align: center; font: 400 4.8em/1.4 var(--marker); color: #1f1a16; transform: rotate(-3deg); }
+.bx-label { position: absolute; left: 10%; right: 10%; bottom: 7.4%; background: #f6f1e6; padding: 1.1em 1.3em; box-shadow: 0 0.2em 0 rgba(0,0,0,0.12); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7em 0.9em; font-size: 0.6em; color: #2a2118; }
+.bx-label.center { left: 16%; right: 16%; bottom: 14%; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5em; }
+.bx-label.slip { left: 50%; right: auto; top: 50%; bottom: auto; width: 66%; transform: translate(-50%, -50%) rotate(-2deg); grid-template-columns: minmax(0, 1fr); font-size: 0.7em; }
+.bx-field { display: flex; flex-direction: column; gap: 0.2em; }
+.bx-field.wide { grid-column: span 2; }
+.bx-field .k { opacity: 0.6; letter-spacing: 0.14em; }
+.bx-label .hand { font: 600 2.3em/1.1 var(--hand); }
+.bx-label .hand.big { font-size: 2.5em; }
+.bx-label .small { font-size: 1.15em; line-height: 1.4; }
+.bx-label .barcode { width: 12em; height: 3.2em; }
+.bx-icons { position: absolute; left: 0; right: 0; top: 22%; display: flex; justify-content: center; gap: 1.6em; color: #2a2118; opacity: 0.85; }
+.bx-icons svg { width: 2.6em; height: 2.6em; }
+.box-title .bt-title { font: 400 3.6em/1.3 var(--marker); color: #1f1a16; transform: rotate(-3deg); }
+.box-title .bt-tag { font: 600 1.6em/1.25 var(--hand); color: rgba(43,36,30,0.8); max-width: 14em; }
+.box-title .bt-by { margin-top: 1.2em; font: 400 0.8em/1.4 var(--type); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(43,36,30,0.6); }
+.box-title .bt-stamp { margin-top: 2.2em; display: flex; flex-direction: column; align-items: center; gap: 0.3em; padding: 0.5em 0.8em; border: 2.5px solid #b0352d; color: #b0352d; transform: rotate(-6deg); font: 700 0.8em/1 var(--type); letter-spacing: 0.18em; opacity: 0.85; }
+.box-title .bt-stamp svg { width: 1.5em; height: 2em; }
 
 /* ---------- bookshelf (landing page) ---------- */
 #shelf { width: 100%; flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; justify-content: safe center; gap: 28px; padding: 24px 16px 8px; }
@@ -525,6 +572,9 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     return [{ lang: post.lang || "en", title: post.title, body: post.body }];
   }
 
+  let THEME = "ticket";
+  const isBox = () => THEME === "box";
+
   function paginateEntry(post, stop, measure) {
     const kind = KINDS[post.type] || KINDS.thought;
     const pages = [];
@@ -535,18 +585,21 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
         p.body.classList.add(bodyClass(post));
         if (v.roman) p.body.classList.add("roman");
         if (first) {
-          p.head.append(h("span", null, `Stop ${pad2(stop)} · `, h("span", { class: "dv" }, "पड़ाव " + toDeva(stop))), h("span", { class: "dv" }, v.tag || kind.hi));
+          if (isBox()) p.head.append(h("span", null, `No. ${pad2(stop)}`), h("span", { class: "hand" }, kind.en));
+          else p.head.append(h("span", null, `Stop ${pad2(stop)} · `, h("span", { class: "dv" }, "पड़ाव " + toDeva(stop))), h("span", { class: "dv" }, v.tag || kind.hi));
           const label = kind.en + (v.label ? " · " + v.label : "") + (post.sample ? " · sample" : "");
           const eh = h("div", { class: "entry-head" },
             h("div", { class: "entry-meta" },
               h("span", { class: "stamp-date", title: longDate(post.date) }, stampDate(post.date)),
               h("span", { class: "entry-kind" }, label)),
             h("h2", { class: "entry-title", lang: lang, dir: "auto" }, v.title || "Untitled"));
-          eh.insertAdjacentHTML("beforeend", routeRule());
+          if (isBox()) eh.appendChild(h("div", { class: "tape-rule", "aria-hidden": "true" }));
+          else eh.insertAdjacentHTML("beforeend", routeRule());
           p.body.appendChild(eh);
           if (post.type === "thought") p.body.appendChild(h("span", { class: "qmark", "aria-hidden": "true" }, lang === "ur" ? "”" : "“"));
         } else {
-          p.head.append(h("span", { class: "ht", dir: "auto", lang: lang }, v.title || "Untitled"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
+          if (isBox()) p.head.append(h("span", { class: "ht", dir: "auto", lang: lang }, v.title || "Untitled"), h("span", { class: "hand" }, "continued"));
+          else p.head.append(h("span", { class: "ht", dir: "auto", lang: lang }, v.title || "Untitled"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
         }
         p.count = 0;
         measure.appendChild(p.page);
@@ -580,11 +633,13 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     const newPage = first => {
       const p = ruledPage("en");
       if (first) {
-        p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "dv", lang: "hi" }, "पड़ाव"), h("span", { class: "en" }, "Stops along the way")));
+        if (isBox()) p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "dv marker" }, "what’s inside"), h("span", { class: "en" }, "Contents of this box")));
+        else p.body.appendChild(h("div", { class: "toc-head" }, h("span", { class: "dv", lang: "hi" }, "पड़ाव"), h("span", { class: "en" }, "Stops along the way")));
       } else {
-        p.head.append(h("span", null, "Stops along the way"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
+        if (isBox()) p.head.append(h("span", null, "What’s inside"), h("span", { class: "hand" }, "continued"));
+        else p.head.append(h("span", null, "Stops along the way"), h("span", null, "continued · ", h("span", { class: "dv" }, "जारी")));
       }
-      p.body.appendChild(h("div", { class: "toc-cols", "aria-hidden": "true" }, h("span", { class: "c1" }, "STOP"), h("span", { class: "c2" }, "ENTRY"), h("span", { class: "c3" }, "PAGE")));
+      p.body.appendChild(h("div", { class: "toc-cols", "aria-hidden": "true" }, h("span", { class: "c1" }, isBox() ? "NO." : "STOP"), h("span", { class: "c2" }, isBox() ? "PIECE" : "ENTRY"), h("span", { class: "c3" }, "PAGE")));
       p.list = h("div", { class: "toc-list" });
       p.body.appendChild(p.list);
       measure.appendChild(p.page);
@@ -592,13 +647,13 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
       return p;
     };
     let pg = newPage(true);
-    if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, "The first stop is still ahead."));
+    if (!posts.length) pg.list.appendChild(h("p", { class: "toc-empty" }, isBox() ? "Nothing unpacked yet. The first piece is on its way." : "The first stop is still ahead."));
     posts.forEach((post, i) => {
       const kind = KINDS[post.type] || KINDS.thought;
       const num = starts ? starts[i] : 88;
       const row = h("button", { class: "toc-row", type: "button", "data-page": starts ? starts[i] : "", "aria-label": `Stop ${i + 1}: ${post.title || "Untitled"}, ${kind.en.toLowerCase()}, page ${num}` },
         h("span", { class: "toc-stop" }, pad2(i + 1)),
-        h("span", { class: "toc-kind" }, kind.hi),
+        h("span", { class: "toc-kind" }, isBox() ? kind.en : kind.hi),
         post.body_hi
           ? h("span", { class: "toc-title", lang: "hi" }, post.title_hi || post.title, h("span", { class: "toc-roman", lang: "en" }, " · " + (post.title || "")))
           : h("span", { class: "toc-title", lang: post.lang || "en", dir: post.lang === "ur" ? "rtl" : "ltr" }, post.title || "Untitled"),
@@ -621,7 +676,72 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
   const field = (k, v, cls) => h("div", { class: "field" + (cls ? " " + cls : "") }, h("span", { class: "k" }, ...k), h("span", { class: "v" }, v));
   const dv = t => h("span", { class: "dv", lang: "hi" }, t);
 
+  /* ---------- the Unwrapped box ---------- */
+  const SVG_UP = '<svg viewBox="0 0 56 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><path d="M14 42 V12 M4 20 L14 6 L24 20"/><path d="M42 42 V12 M32 20 L42 6 L52 20"/></g><line x1="0" y1="43" x2="56" y2="43" stroke="currentColor" stroke-width="3"/></svg>';
+  const SVG_GLASS = '<svg viewBox="0 0 40 54" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M6 4 H34 C 34 22, 28 28, 20 30 C 12 28, 6 22, 6 4 Z"/><path d="M20 30 V48 M10 50 H30"/><path d="M14 10 L19 16 L16 20 L22 25"/></g></svg>';
+  const SVG_UMBRELLA = '<svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 24 C 6 12, 16 6, 24 6 C 32 6, 42 12, 44 24 Z"/><path d="M24 24 V40 C 24 44, 18 44, 18 40"/></g><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 34 l-2 5 M36 32 l-2 5 M40 40 l-2 5"/></g></svg>';
+  function boxShell(cls, d) {
+    const p = blankPage("box " + (cls || ""));
+    p.style.setProperty("--boxpaper", d.paper || "#c48b8b");
+    p.style.setProperty("--tape", d.tape || "#efe3c8");
+    return p;
+  }
+  function boxField(k, v, cls) {
+    return h("div", { class: "bx-field" + (cls ? " " + cls : "") }, h("span", { class: "k" }, k), v);
+  }
+  function boxCover(d) {
+    const p = boxShell("cover", d);
+    p.append(
+      h("div", { class: "bx-seam", "aria-hidden": "true" }),
+      h("div", { class: "bx-tape", "aria-hidden": "true" }),
+      h("div", { class: "bx-up", html: SVG_UP + "<span>THIS SIDE UP</span>" }),
+      h("div", { class: "bx-fragile", html: SVG_GLASS + "<span>FRAGILE</span>" }),
+      h("div", { class: "bx-title" }, d.title_en || "unwrapped"),
+      h("div", { class: "bx-label" },
+        boxField("CONTENTS", h("span", { class: "hand big" }, d.contents || "true feelings, poems & simple stories"), "wide"),
+        boxField("FROM", h("span", { class: "hand" }, d.author || "")),
+        boxField("HANDLING", h("span", { class: "small" }, "open with an", h("br"), "open heart"))));
+    p.setAttribute("data-density", "hard");
+    return p;
+  }
+  function boxBack(d) {
+    const p = boxShell("cover back-box", d);
+    p.append(
+      h("div", { class: "bx-seam", "aria-hidden": "true" }),
+      h("div", { class: "bx-tape top", "aria-hidden": "true" }),
+      h("div", { class: "bx-icons", html: SVG_GLASS + SVG_UP + SVG_UMBRELLA }),
+      h("div", { class: "bx-label center" },
+        h("div", { class: "barcode", "aria-hidden": "true" }),
+        h("span", { class: "small" }, d.ticket_no || "No. 000003"),
+        h("span", { class: "hand big" }, "If found, please open."),
+        h("span", { class: "small" }, "Someone might need what’s inside.")));
+    p.setAttribute("data-density", "hard");
+    return p;
+  }
+  function boxEndpaper(d, first) {
+    const p = boxShell("bx-end", d);
+    p.appendChild(h("div", { class: "bx-label slip" },
+      first ? boxField("FROM", h("span", { class: "hand big" }, d.author || "")) : boxField("NEXT DELIVERY", h("span", { class: "hand big" }, "more parcels on the way")),
+      first ? boxField("TO", h("span", { class: "hand big" }, "whoever needs it")) : boxField("RETURN ADDRESS", h("span", { class: "hand" }, d.author || ""))));
+    return p;
+  }
+  function boxTitle(d) {
+    const p = blankPage("titlepage box-title");
+    p.appendChild(h("div", { class: "center-page" },
+      h("div", { class: "bt-title" }, d.title_en || "unwrapped"),
+      h("div", { class: "bt-tag" }, d.contents || "true feelings, poems & simple stories"),
+      h("div", { class: "bt-by" }, "packed with care by " + (d.author || "")),
+      h("div", { class: "bt-stamp", html: SVG_GLASS + "<span>FRAGILE</span>" })));
+    return p;
+  }
+  function boxUnwritten() {
+    const p = blankPage("unwritten");
+    p.appendChild(h("div", { class: "center-page" }, h("div", { class: "hand-big" }, "more to unpack…"), h("div", { class: "en" }, "pages still sealed")));
+    return p;
+  }
+
   function coverPage(d) {
+    if (d.design === "box") return boxCover(d);
     const p = blankPage("cover");
     p.append(...notches());
     p.appendChild(h("div", { class: "cv" },
@@ -642,6 +762,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     return p;
   }
   function backCover(d) {
+    if (d.design === "box") return boxBack(d);
     const p = blankPage("cover back");
     p.append(...notches());
     p.appendChild(h("div", { class: "cv" },
@@ -704,6 +825,8 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
 
     const posts = (data.posts || []).slice();
     const d = data.diary || {};
+    THEME = d.design || "ticket";
+    measure.className = "bookfont theme-" + THEME;
 
     const entryPages = posts.map((post, i) => paginateEntry(post, i + 1, measure));
     let toc = buildContents(posts, measure, null);
@@ -718,19 +841,26 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     const meta = [];
     const push = (el, entry) => { all.push(el); meta.push(entry == null ? null : entry); };
     push(coverPage(d));
-    push(endpaper("यात्री · " + (d.author_hi || d.author || ""), "PASSENGER · " + (d.author || "").toUpperCase()));
-    push(titlePage(d));
+    if (isBox()) { push(boxEndpaper(d, true)); push(boxTitle(d)); }
+    else {
+      push(endpaper("यात्री · " + (d.author_hi || d.author || ""), "PASSENGER · " + (d.author || "").toUpperCase()));
+      push(titlePage(d));
+    }
     toc.forEach(p => push(p.page));
     entryPages.forEach((pgs, i) => pgs.forEach(p => push(p.page, i)));
-    push(unwrittenPage());
-    if ((all.length + 2) % 2 !== 0) push(unwrittenPage());
-    push(endpaper("अगला पड़ाव जल्द", "NEXT STOP SOON"));
+    const blank = isBox() ? boxUnwritten : unwrittenPage;
+    push(blank());
+    if ((all.length + 2) % 2 !== 0) push(blank());
+    push(isBox() ? boxEndpaper(d, false) : endpaper("अगला पड़ाव जल्द", "NEXT STOP SOON"));
     push(backCover(d));
 
     all.forEach((el, i) => {
       el.classList.add(geo.spread && i % 2 === 1 ? "left" : "right");
       const foot = el.querySelector(".page-foot");
-      if (foot) foot.append(h("span", null, String(i)), h("span", { class: "dv", "aria-hidden": "true" }, toDeva(i)));
+      if (foot) {
+        if (isBox()) foot.append(h("span", null, "— " + i + " —"));
+        else foot.append(h("span", null, String(i)), h("span", { class: "dv", "aria-hidden": "true" }, toDeva(i)));
+      }
       sizePage(el);
     });
     return { pages: all, meta, starts, posts };
@@ -885,7 +1015,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     const list = (data.books && data.books.length) ? data.books : [{ id: "diary" }];
     books = list.map(b => Object.assign({}, base, b, { posts: [] }));
     const find = id => books.find(x => x.id === id);
-    const pick = p => p.book || ((p.body_hi || p.lang === "hi") ? "hindi" : "english");
+    const pick = p => p.book || ((p.body_hi || p.lang === "hi") ? "hindi" : (find("unwrapped") ? "unwrapped" : "english"));
     (data.posts || []).forEach(p => {
       if (p.body_hi) {
         // a Hindi poem written in Roman letters: Devanagari in the Hindi book, the Roman original in the English book
@@ -979,9 +1109,11 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
       cover.style.width = cw + "px";
       cover.style.height = ch + "px";
       const n = b.posts.length;
-      const count = n ? `${n} ${n === 1 ? "stop" : "stops"} · ${toDeva(n)} पड़ाव` : "first stop ahead";
+      const count = b.design === "box"
+        ? (n ? `${n} ${n === 1 ? "piece" : "pieces"} inside` : "nothing unpacked yet")
+        : (n ? `${n} ${n === 1 ? "stop" : "stops"} · ${toDeva(n)} पड़ाव` : "first stop ahead");
       const card = h("a", { class: "shelf-card", href: "#" + b.id, style: `--stamp: ${b.stamp || "#b23a3a"}; --tilt: ${i % 2 ? 2 : -2}deg`, "aria-label": `Open ${b.shelf_label || b.title_en}, ${count}` },
-        h("div", { class: "shelf-cover bookfont", style: `font-size: ${fs}` }, cover),
+        h("div", { class: "shelf-cover bookfont theme-" + (b.design || "ticket"), style: `font-size: ${fs}` }, cover),
         h("span", { class: "shelf-label" }, b.shelf_label || b.title_en || ""),
         h("span", { class: "shelf-count" }, count));
       row.appendChild(card);
@@ -1003,7 +1135,10 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     stage.classList.remove("nolib");
     stage.style.width = (geo.spread ? geo.w * 2 : geo.w) + "px";
     stage.style.height = geo.h + "px";
-    const block = h("div", { class: "bookfont", id: "book" });
+    const block = h("div", { class: "bookfont theme-" + (currentBook.design || "ticket"), id: "book" });
+    // the page-turn library rewrites each page's inline style, so book-wide colours live on the book itself
+    if (currentBook.paper) block.style.setProperty("--boxpaper", currentBook.paper);
+    if (currentBook.tape) block.style.setProperty("--tape", currentBook.tape);
     stage.appendChild(block);
     book.pages.forEach(p => block.appendChild(p));
     document.getElementById("measure").innerHTML = "";
@@ -1105,7 +1240,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     setupBooks();
     try {
       await Promise.race([
-        Promise.all(["400 1em 'Rozha One'", "400 1em 'Special Elite'", "400 1em 'Tiro Devanagari Hindi'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'"]
+        Promise.all(["400 1em 'Rozha One'", "400 1em 'Special Elite'", "400 1em 'Tiro Devanagari Hindi'", "400 1em 'EB Garamond'", "italic 400 1em 'EB Garamond'", "400 1em Fraunces", "italic 600 1em Fraunces", "700 1em Caveat", "400 1em 'Permanent Marker'"]
           .map(f => document.fonts.load(f, "राही Aa"))),
         new Promise(res => setTimeout(res, 3500))
       ]);

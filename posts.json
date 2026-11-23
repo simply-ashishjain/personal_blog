@@ -25,6 +25,17 @@
       "shelf_label": "English poems",
       "ticket_no": "No. 000002",
       "stamp": "#2f5d8a"
+    },
+    {
+      "id": "unwrapped",
+      "design": "box",
+      "title_en": "unwrapped",
+      "shelf_label": "Unwrapped · English poems & stories",
+      "contents": "true feelings, poems & simple stories",
+      "ticket_no": "No. 000003",
+      "paper": "#c48b8b",
+      "tape": "#efe3c8",
+      "stamp": "#b0352d"
     }
   ],
   "posts": [
@@ -236,6 +247,15 @@
       "body_hi": "ये अनगिनत पेड़ जैसे उल्टी दिशा में मुझसे दूर भाग रहे हैं...\n\nकुछ फूल पत्तियों से लिपटकर सो गए हैं...कुछ अभी भी जाग रहे हैं...\n\nटेढ़ी मेढ़ी सी डगर है...\nरास्ते जैसे ज़िंदगी का आईना बन बैठे हैं...\n\nदिलकश सुहाना सा सफ़र है...\nजैसे किसी शायर के अल्फ़ाज़ ख़ूबसूरती के मायने बयान करते रहते हैं...\n\nवक़्त यहीं ठहर क्यों नहीं जाता...\nशाम यहीं ढल क्यों नहीं जाती..\nअभी तो ये सफ़र शुरू हुआ...\nइसी सफ़र में हँसते...मुस्कुराते...गीत गाते...\nये सारी ज़िंदगी कट क्यों नहीं जाती...",
       "body": "Ye anginat ped jese ulti disha mei mujse door bhaag rahe hain...\n\nKuch phool pattiyon se lipatkar so gaye hain...kuch abi b jaag rahe hain...\n\nTedhi medhi si dagar hai...\nRaaste jese zindagi ka aayne ban baithe hain...\n\nDilkash suhana sa safar hai...\nJese kisi shayar k alfaaz khubsurati k maayne bayan krte rehte hain...\n\nWaqt yahi thehar kyu nahi jaata...\nShaam yahi dhal kyu nahi jaati..\nAbhi to ye safar shuru hua...\nIssi safar mei hasste...muskurate...geet gaate...\nYe saari zindagi kat kyu nahi jaati...",
       "book": "hindi"
+    },
+    {
+      "id": "perfect-moment",
+      "book": "unwrapped",
+      "type": "poem",
+      "title": "Perfect Moment",
+      "date": "2026-11-23",
+      "lang": "en",
+      "body": "There is a moment I imagined,\nIt was a cool breezy spring evening...\nWhen the coffee was just right amount of hot..\nThe sun was shining, it had just drizzled...\nBirds were chirping, I could see a very clear yet distant rainbow...\nI was smiling on some old memory..\nA joke from an old friend..\nMy heart was unbroken, in almost its full shape..\nor at least there were pieces I could easily count..\nI had a family, and a bunch of other people who are still around..\nWhom I would remember, and who would also miss me when I am gone..\nI was peaceful in that moment, \nNo other place I'd rather be..\nMaybe some unfulfilled dreams..\nbut no restless haste for them to be..\nI touch the cup to my lips and take a sip of the hot coffee..and go \"Ahhh! This is life, such a\nbliss!! \nIs this what I always yearn, Is this what I miss?\"\nPheww...\nI keep chasing such a moment, but I suddenly realize this when I write..\nThere are a million already lost, a million more I might..\nWhat I am trying to say\n Is that its not always black or white, perfection is in Gray..\nThere is at least one Perfect Moment, hidden in each imperfect day....!!"
     }
   ]
 }
