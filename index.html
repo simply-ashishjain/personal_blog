@@ -1065,6 +1065,7 @@ body[data-mode="shelf"] #controls { margin-bottom: 4px; }
     const find = id => books.find(x => x.id === id);
     const pick = p => p.book || ((p.body_hi || p.lang === "hi") ? "hindi" : (find("unwrapped") ? "unwrapped" : "english"));
     (data.posts || []).forEach(p => {
+      if (p.hidden) return;
       if (p.body_hi) {
         // a Hindi poem written in Roman letters: Devanagari in the Hindi book, the Roman original in the English book
         const hi = find("hindi") || books[0];
